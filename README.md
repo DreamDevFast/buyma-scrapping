@@ -1,2 +1,2 @@
-# scriping-site
-scriping-site
+# yahoo_rakuten
+yahoo_rakuten
