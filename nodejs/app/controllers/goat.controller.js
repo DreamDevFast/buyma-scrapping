@@ -1,7 +1,6 @@
 const db = require("../models");
 const axios = require("axios"); 
 const Products = db.products;
-// const competitionList = db.competition_list;
 
 var user_id = 1;
 var keyword = "";

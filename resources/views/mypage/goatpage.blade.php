@@ -134,14 +134,14 @@
                     <div class="col-lg-8 col-md-8 col-sm-8">
                         <select class="form-control show-tick" id="category" name="category">
                             <option value="all">All</option>
-                            <option value="Sneakers">Sneakers</option>
-                            <option value="Apparel">Apparel</option>
-                            <option value="T-Shirts">T-Shirts</option>
-                            <option value="Hoodies">Hoodies</option>
-                            <option value="Outerwear">Outerwear</option>
-                            <option value="Bottoms">Bottoms</option>
-                            <option value="Bags">Bags</option>
-                            <option value="Jewelry">Jewelry</option>
+                            <option value="sneakers">Sneakers</option>
+                            <option value="apparel">Apparel</option>
+                            <option value="t-shirts">T-Shirts</option>
+                            <option value="hoodies">Hoodies</option>
+                            <option value="outerwear">Outerwear</option>
+                            <option value="bottoms">Bottoms</option>
+                            <option value="bags">Bags</option>
+                            <option value="jewelry">Jewelry</option>
                         </select>
                     </div>
                 </div>

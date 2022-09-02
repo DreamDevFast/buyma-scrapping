@@ -259,7 +259,8 @@
         $("#defaultModal").modal('hide');
 
         $.ajax({
-            url: 'http://localhost:32768/api/v1/goats/get_info?sel={{Auth::user()->id}}',
+            //url: 'http://localhost:32768/api/v1/goats/get_info?sel={{Auth::user()->id}}',
+            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/goats/get_info?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
                 category: $("#category").val(),
@@ -271,22 +272,13 @@
                 
             }
         });
-			
+		
     }
     function add_loui_product(){
-        // $("#defaultModal").modal('hide');
-        // $.getJSON(
-    	// // NB: using Open Exchange Rates here, but you can use any source!
-        //     'https://openexchangerates.org/api/latest.json?app_id=d35914e8762c4ef399ca096af03f4a65',
-        //     function(data) {
-        //         // Check money.js has finished loading:
-               
-        //        var jpy = 1 / data.rates.EUR * data.rates.JPY;
-        //        console.log(jpy);
-        //     }
-        // );
+        $("#defaultModal").modal('hide');
         $.ajax({
-            url: 'http://localhost:32768/api/v1/louis/get_info?sel={{Auth::user()->id}}',
+            //url: 'http://localhost:32768/api/v1/louis/get_info?sel={{Auth::user()->id}}',
+            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/louis/get_info?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
                 category: $("#category").val(),
@@ -298,6 +290,7 @@
                 
             }
         });
+        
     }
     localStorage.setItem('skeyword', "<?=$skeyword?>");
     function search(){

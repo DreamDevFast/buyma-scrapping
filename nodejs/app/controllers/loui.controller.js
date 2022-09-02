@@ -1,7 +1,6 @@
 const db = require("../models");
 const axios = require("axios"); 
 const Products = db.products;
-// const competitionList = db.competition_list;
 
 var user_id = 1;
 var keyword = "";
@@ -38,10 +37,11 @@ class SneakersInfo{
 		this.res = data;
 	}
 	save_data(){
-		console.log("+++", this.res);
+
 		Products.findAll({ where: {user_id : user_id, product_id : this.res.product_id}})
 		.then(data => {
-
+						
+			console.log("data", data);
 			if(data.length > 0){
 				Products.update(this.res, {
 					where: { user_id : user_id, product_id : this.res.product_id }
@@ -52,11 +52,11 @@ class SneakersInfo{
 					
 				})
 				.catch(err => {
-					console.log("Update data Failed!");
+					console.log("Update data Failed! -1");
 				});
 
 			}else{
-
+				
 				Products.create(this.res)
 				.then(num => {
 
@@ -64,7 +64,7 @@ class SneakersInfo{
 					
 				})
 				.catch(err => {
-					console.log("Update data Failed!");
+					console.log("Update data Failed! -2");
 				});
 
 			}
@@ -79,7 +79,7 @@ var index = 0;
 function SneakersGetData(page){
 	
 	var url = "https://api.louisvuitton.com/eco-eu/search-merch-eapi/v1/ita-it/plp/products/"+catergory_list[category]["code"][index]+"?page="+page;
-	console.log("URL >> ", url);
+	//console.log("URL >> ", index);
 
 	// if(max_price > 0){
 	// 	url +="&filters[lowest_price_cents]="+min_price+"-"+max_price;
@@ -122,7 +122,7 @@ function SneakersGetData(page){
 				var price = res[i].offers.priceSpecification[0].price.replace("€", "");
 				price = price.replace(",", ".");
 
-				console.log(price);
+				//console.log(price);
 				insert_query.product_price = price;
 				insert_query.normal_pirce_ = price;
 				insert_query.tariff_ = "";
@@ -171,7 +171,7 @@ exports.getInfo = (req, res) => {
 
 			if(req.query.max_price > 0)	max_price = req.query.max_price;
 			sn_now_page = 1;
-			index = 1;
+			index = 0;
 			SneakersGetData(sn_now_page);
 		}else{
 			console.log("Sel is 0!");
