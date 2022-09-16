@@ -8,6 +8,8 @@ var min_price = 0;
 var max_price = 0;
 var category = "all";
 
+const site_url = "https://www.goat.com/"
+
 // var catergory_list = ["Sneakers","T-Shirts", "Outerwear", "Bags", "Apparel", "Hoodies", "Bottoms", "Jewelry"];
 var sn_now_page = 1;
 
@@ -75,7 +77,7 @@ function SneakersGetData(page){
 				var val = res[i].value.split("'");
 				
 				insert_query.user_id = user_id;
-				insert_query.site_url = "https://www.goat.com/";
+				insert_query.site_url = site_url;
 
 				insert_query.product_id = res[i].data.id;
 				//console.log("SnerksName:", insert_query.product_id);
@@ -141,3 +143,21 @@ exports.getInfo = (req, res) => {
 
 }
 
+exports.exhibit = (req, res) => {
+	Products.findAll({
+	  where: { user_id, site_url },
+	})
+	  .then(async (products) => {
+		if (products.length) {
+		  await loginBuyma()
+		  for (let i = 0; i < products.length; i++) {
+			await exhibitBuyma(products[i], i !== 0)
+		  }
+		  res.status(200).json({ success: true })
+		}
+	  })
+	  .catch((err) => {
+		console.log('exhibit in goat error: ', err)
+		res.status(500).json({ success: false, error: err })
+	  })
+  }

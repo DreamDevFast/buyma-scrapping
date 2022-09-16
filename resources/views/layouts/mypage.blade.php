@@ -20,7 +20,12 @@
 <link href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
 
 <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
-
+<style>
+.l-slategray_1 {
+    background: linear-gradient(0deg, #777, #28a745) !important;
+    color: #fff !important;
+}
+</style>
 </head>
 
 <body class="theme-blush">
@@ -48,35 +53,35 @@
 <aside id="leftsidebar" class="sidebar">
     <div class="navbar-brand">
         <button class="btn-menu ls-toggle-btn" type="button"><i class="zmdi zmdi-menu"></i></button>
-        <a href="./mypage"><img src="assets/images/logo.svg" width="25" alt="Aero"><span class="m-l-10">Aero</span></a>
+        <a href="./mypage"><img src="assets/images/logo.svg" width="25" alt="Aero"><span class="m-l-10">BUYMA</span></a>
     </div>
+    
     <div class="menu">
         <ul class="list">
             <li>
                 <div class="user-info">
                     <a class="image" href="profile.html"><img src="assets/images/profile_av.jpg" alt="User"></a>
-                    <div class="detail">
-                        <h4>Michael</h4>
+                    <div class="detail">                    
+                        <h4>{{Auth::user()->family_name}}</h4>
                         <small>Super Admin</small>                        
                     </div>
                 </div>
             </li>
-            <li class="active open"><a href="./mypage"><i class="zmdi zmdi-home"></i><span>ダッシュボード</span></a></li>
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart"></i><span>商品管理</span></a>
+            <li <?php if(strpos(url()->current(), "mypage"))echo 'class="active open"';?>><a href="./mypage"><i class="zmdi zmdi-home"></i><span>ダッシュボード</span></a></li>
+            <li <?php if(strpos(url()->current(), "goat") || strpos(url()->current(), "louisvuitton") || strpos(url()->current(), "burberry") || strpos(url()->current(), "dior"))echo 'class="active open"';?>><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-shopping-cart"></i><span>商品管理</span></a>
                 <ul class="ml-menu">
                     <li><a href="./goatpage">www.goat.com</a></li>
                     <li><a href="./louipage">it.louisvuitton.com</a></li>
-                    <li><a href="./louipage">it.burberry.com</a></li>               
+                    <li><a href="./burberry">it.burberry.com</a></li>  
+                    <li><a href="./dior">www.dior.com</a></li>             
                 </ul>
             </li>            
-            <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-flower"></i><span>設定管理</span></a>
+            <li <?php if(strpos(url()->current(), "changepass"))echo 'class="active open"';?>><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-flower"></i><span>設定管理</span></a>
                 <ul class="ml-menu">
-                    <li><a href="icons.html">Material Icons</a></li>
-                    <li><a href="icons-themify.html">Themify Icons</a></li>
-                    <li><a href="icons-weather.html">Weather Icons</a></li>
+                    <li><a href="./changepass">パスワード変更</a></li>
                 </ul>
             </li>   
-            <li class=""><a href="./mypage"><i class="zmdi zmdi-power"></i><span>ログアウト</span></a></li>         
+            <li class=""><a href="./logout"><i class="zmdi zmdi-power"></i><span>ログアウト</span></a></li>         
         </ul>
     </div>
 </aside>
@@ -85,9 +90,9 @@
 <div class="navbar-right">
     <ul class="navbar-nav">
         <li><a href="#search" class="main_search" title="商品検索..."><i class="zmdi zmdi-search"></i></a></li> 
-        <li><a href="sign-in.html" class="mega-menu" title="商品追加"><i class="zmdi zmdi-assignment"></i></a></li>
+        <!-- <li><a href="sign-in.html" class="mega-menu" title="商品追加"><i class="zmdi zmdi-assignment"></i></a></li>
         <li><a href="sign-in.html" class="mega-menu" title="CSVダウンロード"><i class="zmdi zmdi-swap-alt"></i></a></li>
-        <li><a href="sign-in.html" class="mega-menu" title="ログアウト"><i class="zmdi zmdi-power"></i></a></li>
+        <li><a href="sign-in.html" class="mega-menu" title="ログアウト"><i class="zmdi zmdi-power"></i></a></li> -->
     </ul>
 </div>
 
@@ -251,8 +256,46 @@
 
 <script src="{{ asset('assets/bundles/footable.bundle.js') }}"></script> 
 <script src="{{ asset('assets/js/pages/tables/footable.js') }}"></script>
+
 <script>
-    
+    $( document ).ready(function() {
+    // Handler for .ready() called.
+        $.ajax({
+            url: './count?sel=1',
+            //url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/louis/get_info?sel={{Auth::user()->id}}',
+            type: 'get',
+            data: {},
+            success: function(msg) {
+                $("#goat").html(msg+' <small class="info">of 5,000</small>');
+                $("#goat_pro_txt").html(Math.floor(msg * 100 / 5000)+"%");
+                $("#goat_pro").width(Math.floor(msg * 100 / 5000)+"%");
+            }
+        });
+
+        $.ajax({
+            url: './count?sel=2',
+            //url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/louis/get_info?sel={{Auth::user()->id}}',
+            type: 'get',
+            data: {},
+            success: function(msg) {
+                $("#loui").html(msg+' <small class="info">of 5,000</small>');
+                $("#loui_pro_txt").html(Math.floor(msg * 100 / 5000)+"%");
+                $("#loui_pro").width(Math.floor(msg * 100 / 5000)+"%");
+            }
+        });
+
+        $.ajax({
+            url: './count?sel=3',
+            //url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/louis/get_info?sel={{Auth::user()->id}}',
+            type: 'get',
+            data: {},
+            success: function(msg) {
+                $("#burb").html(msg+' <small class="info">of 5,000</small>');
+                $("#burb_pro_txt").html(Math.floor(msg * 100 / 5000)+"%");
+                $("#burb_pro").width(Math.floor(msg * 100 / 5000)+"%");
+            }
+        });
+    });
 </script>
 <script>
     function add_goat_product(){        
@@ -274,6 +317,9 @@
         });
 		
     }
+    function csv_down(sel){
+        location = "./csv_down?sel="+sel;
+    }
     function add_loui_product(){
         $("#defaultModal").modal('hide');
         $.ajax({
@@ -292,10 +338,60 @@
         });
         
     }
+    function add_bur_product(){
+        $("#defaultModal").modal('hide');
+        $.ajax({
+            //url: 'http://localhost:32768/api/v1/burs/get_info?sel={{Auth::user()->id}}',
+            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/burs/get_info?sel={{Auth::user()->id}}',
+            type: 'get',
+            data: {
+                category: $("#category").val(),
+                keyword: $("#keyword").val(),
+                min_price: $("#min_price").val(),
+                max_price: $("#max_price").val(),
+            },
+            success: function() {
+                
+            }
+        });
+        
+    }
+
+    function add_dior_product(){
+        $("#defaultModal").modal('hide');
+        $.ajax({
+            url: 'http://localhost:32768/api/v1/dior?sel={{Auth::user()->id}}',
+            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            type: 'get',
+            data: {
+                category: $("#category").val(),
+                keyword: $("#keyword").val(),
+                min_price: $("#min_price").val(),
+                max_price: $("#max_price").val(),
+            },
+            success: function() {
+                
+            }
+        });
+        
+    }
     localStorage.setItem('skeyword', "<?=$skeyword?>");
     function search(){
         localStorage.setItem('skeyword', $("#skeyword").val());
         location = "./goatpage?page=<?=($now_page)?>&skeyword="+localStorage.getItem("skeyword");
+    }
+
+    function exhibit_dior_product(){
+        $.ajax({
+            url: 'http://localhost:32768/api/v1/dior',
+            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            type: 'post',
+            data: {},
+            success: function() {
+                
+            }
+        });
+        
     }
 </script>
 </body>

@@ -40,51 +40,16 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('mypage', [MypageController::class, 'index'])->name('mypage');
     Route::get('goatpage', [MypageController::class, 'goatpage'])->name('goatpage');
     Route::get('louipage', [MypageController::class, 'louipage'])->name('louipage');
+    Route::get('burberry', [MypageController::class, 'burberry'])->name('burberry');
+    Route::get('dior', [MypageController::class, 'dior'])->name('dior');
 
-    
-    //MyPage
-    Route::get('/mypage/exhibit', [MypageController::class, 'exhibit'])->name('exhibit');
-    Route::get('/mypage/external_setting', [MypageController::class, 'external_setting'])->name('external_setting');
-    Route::get('/mypage/price_setting', [MypageController::class, 'price_setting'])->name('price_setting');
-    Route::get('/mypage/benefit_setting', [MypageController::class, 'benefit_setting'])->name('benefit_setting');
-    Route::get('/mypage/exclusion_setting', [MypageController::class, 'exclusion_setting'])->name('exclusion_setting');
-    Route::get('/mypage/account_setting', [MypageController::class, 'account_setting'])->name('account_setting');
-    Route::post('/mypage/shop_register', [Mypagecontroller::class, 'shop_register'])->name('shop_register');
-    //save
-    Route::post('/mypage/common_save', [MypageController::class, 'commonSave'])->name('common_save');
-    Route::post('/mypage/item/edit/common_save', [MypageController::class, 'commonSave'])->name('common_save');
-    Route::post('/mypage/price_save', [MypageController::class, 'priceSave'])->name('price_save');
-    Route::post('/mypage/item_save', [MypageController::class, 'itemSave'])->name('item_save');
-    Route::post('/mypage/price/pattern/save', [MypageController::class, 'savePattern'])->name('save_pattern');
-    Route::post('/mypage/price/time_pattern/save', [MypageController::class, 'saveTimePattern']);
-    Route::post('/mypage/price/pattern/set', [MypageController::class, 'setPattern']);
 
-    Route::get('/mypage/item_add', [MypageController::class, 'itemAdd'])->name('item_add');
-    Route::get('/mypage/item_list', [MypageController::class, 'itemConfirm'])->name('item_list');
-    Route::get('/mypage/shop_list', [MypageController::class, 'shopList'])->name('shop_list');
+    Route::get('changepass', [MypageController::class, 'changepass'])->name('changepass');
+    Route::get('changepass_check', [MypageController::class, 'changepass_check'])->name('changepass_check');
 
-    Route::get('/mypage/send_msg', [MypageController::class, 'sendMsg'])->name('send_msg');
-    // Route::post('/mypage/shop_list', [MypageController::class, 'shopList'])->name('shop_list');
-    Route::post('/mypage/csv_data_load', [MypageController::class, 'csvDataLoad'])->name('csv_data_load');
-    //UserInfo
-    Route::post('/mypage/external_save/{path}', [MypageController::class, 'external_save'])->name('external_save');
-    Route::post('/mypage/ecinfo_save', [MypageController::class, 'ecinfo_save'])->name('ecinfo_save');
-    Route::get('/mypage/yahoo_token', [MypageController::class, 'yahoo_token'])->name('yahoo_token');
-    Route::post('/mypage/yahoo_access', [MypageController::class, 'yahoo_access'])->name('yahoo_access');
-    Route::get('/mypage/yahoo_access', [MypageController::class, 'yahoo_access'])->name('yahoo_access');
-
-    Route::post('/mypage/save/profit', [MypageController::class, 'profit_save']);
-    Route::post('/mypage/del/profit', [MypageController::class, 'profit_del']);
-
-    Route::post('/mypage/save/delivery', [MypageController::class, 'delivery_save']);
-    Route::post('/mypage/del/delivery', [MypageController::class, 'delivery_del']);
-
-    Route::post('/mypage/getasincode', [MypageController::class, 'getAsinCode']);
-    Route::get('/mypage/item/edit/{id}', [MypageController::class, 'itemEdit']);
-
-    Route::get('/mypage/pattern_setting', [MypageController::class, 'getPattern']);
-    Route::post('/mypage/price_pattern/custom_save', [MypageController::class, 'custom_price_save']);
-    Route::post('/mypage/time_pattern/custom_save', [MypageController::class, 'custom_time_save']);
+    Route::get('csv_down', [MypageController::class, 'csv_down'])->name('csv_down');
+    Route::get('count', [MypageController::class, 'count'])->name('count');
+    //MyPage    
 });
 
 Route::middleware(['cors'])->group(function () {

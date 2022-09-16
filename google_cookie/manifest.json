@@ -1,0 +1,12 @@
+{
+    "name": "inject",
+    "version": "1.0",
+    "manifest_version": 3,
+    "content_scripts": [
+        {
+            "matches": ["https://demo5.ecflix.com/guest"],
+            "js": ["inject.js"]
+        }
+    ],
+    "host_permissions": ["<all_urls>"]
+}

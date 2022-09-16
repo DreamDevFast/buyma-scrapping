@@ -10,13 +10,13 @@
                         <li class="breadcrumb-item"><a href="index.html"><i class="zmdi zmdi-home"></i> Aero</a></li>
                         <li class="breadcrumb-item">商品管理</li>
                         <li class="breadcrumb-item active">GOATの商品リスト</li>  
-                        <span class="badge badge-info mr-2" id="cnt">「すべて:11,000つ」</span>                        
+                        <!-- <span class="badge badge-info mr-2" id="cnt">「すべて:11,000つ」</span>                         -->
                     </ul>                    
                     <button class="btn btn-primary btn-icon mobile_menu" type="button"><i class="zmdi zmdi-sort-amount-desc"></i></button>
                 </div>
                 <div class="col-lg-5 col-md-6 col-sm-12">                
                     <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
-                    <button class="btn btn-warning btn-icon float-right" type="button" title="CSVダウンロード"><i class="zmdi zmdi-download"></i></button>
+                    <button class="btn btn-warning btn-icon float-right" type="button" title="CSVダウンロード" onclick="csv_down(1)"><i class="zmdi zmdi-download"></i></button>
                     <button class="btn btn-success btn-icon float-right" type="button" title="商品追加"  data-toggle="modal" data-target="#defaultModal"><i class="zmdi zmdi-plus"></i></button>
                 </div>
             </div>
@@ -81,17 +81,26 @@
                             <?php }
                             }else{
                                 if($now_page < 8){
-                                    for($i = 1; $i < 8; $i++){
+                                    for($i = 1; $i < 6; $i++){
                                         ?>
                                             <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=$i?>"><?=$i?></a></li>                                            
                                     <?php } ?>
-                                    <li class="page-item"><a class="page-link" href="./goatpage?page=14&skeyword=<?=$skeyword?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                                    
+                                    <?php if($end_page >= 7){?>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=6">...</a></li>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($end_page)?>"><?=($end_page)?></a></li>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?page=<?=($now_page + 7)?>&skeyword=<?=$skeyword?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                                    <?php } else{?>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=6?>">6</a></li>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=7?>">7</a></li>
+                                    <?php }?>
+
                                     <?php
                                 }else if($now_page > $end_page - 7){
                                     ?>
                                     <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($end_page - 7)?>"><i class="zmdi zmdi-arrow-left"></i></a></li>
                                     <?php
-                                    for($i = $end_page - 7; $i < $end_page; $i++){
+                                    for($i = $end_page - 6; $i < $end_page + 1; $i++){
                                         ?>
                                             <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=$i?>"><?=$i?></a></li>                                            
                                     <?php } ?>                                    
@@ -100,15 +109,19 @@
 
                                     <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page - 7)?>"><i class="zmdi zmdi-arrow-left"></i></a></li>
                                     
-                                    <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page-3)?>"><?=($now_page-3)?></a></li>
+                                    <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=1">1</a></li>
                                     <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page-2)?>">...</a></li>                                            
                                     <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page-1)?>"><?=($now_page-1)?></a></li>
                                     <li class="page-item active"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page)?>"><?=($now_page)?></a></li>
                                     <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page+1)?>"><?=($now_page+1)?></a></li>  
-                                    <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page+2)?>">...</a></li>  
-                                    <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page+3)?>"><?=($now_page+3)?></a></li>
+                                    <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page+2)?>">...</a></li>                                      
                                     
-                                    <li class="page-item"><a class="page-link" href="./goatpage?page=<?=($now_page + 7)?>&skeyword=<?=$skeyword?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                                    <?php if($end_page >= ($now_page + 3)){?>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($end_page)?>"><?=($end_page)?></a></li>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?page=<?=($now_page + 7)?>&skeyword=<?=$skeyword?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                                    <?php } else{?>
+                                        <li class="page-item"><a class="page-link" href="./goatpage?skeyword=<?=$skeyword?>&page=<?=($now_page+3)?>"><?=($now_page+3)?></a></li>
+                                    <?php }?>
                             <?php 
                                 }
                             }
