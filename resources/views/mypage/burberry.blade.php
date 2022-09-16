@@ -16,6 +16,7 @@
                 <div class="col-lg-5 col-md-6 col-sm-12">                
                     <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
                     <button class="btn btn-warning btn-icon float-right" type="button" title="CSVダウンロード"  onclick="csv_down(3)"><i class="zmdi zmdi-download"></i></button>
+                    <button class="btn btn-warning btn-icon float-right" type="button" title="出品"  onclick="exhibit_burberry_product()"><i class="zmdi zmdi-upload"></i></button>
                     <button class="btn btn-success btn-icon float-right" type="button" title="商品追加"  data-toggle="modal" data-target="#defaultModal"><i class="zmdi zmdi-plus"></i></button>
                 </div>
             </div>

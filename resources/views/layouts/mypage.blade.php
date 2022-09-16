@@ -295,6 +295,18 @@
                 $("#burb_pro").width(Math.floor(msg * 100 / 5000)+"%");
             }
         });
+
+        $.ajax({
+            url: './count?sel=4',
+            //url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/louis/get_info?sel={{Auth::user()->id}}',
+            type: 'get',
+            data: {},
+            success: function(msg) {
+                $("#dior").html(msg+' <small class="info">of 5,000</small>');
+                $("#dior_pro_txt").html(Math.floor(msg * 100 / 5000)+"%");
+                $("#dior_pro").width(Math.floor(msg * 100 / 5000)+"%");
+            }
+        });
     });
 </script>
 <script>
@@ -302,8 +314,8 @@
         $("#defaultModal").modal('hide');
 
         $.ajax({
-            //url: 'http://localhost:32768/api/v1/goats/get_info?sel={{Auth::user()->id}}',
-            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/goats/get_info?sel={{Auth::user()->id}}',
+            url: 'http://localhost:32768/api/v1/goats/get_info?sel={{Auth::user()->id}}',
+            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/goats/get_info?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
                 category: $("#category").val(),
@@ -391,7 +403,42 @@
                 
             }
         });
-        
+    }
+
+    function exhibit_burberry_product(){
+        $.ajax({
+            url: 'http://localhost:32768/api/v1/burs',
+            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            type: 'post',
+            data: {},
+            success: function() {
+                
+            }
+        });
+    }
+
+    function exhibit_goat_product(){
+        $.ajax({
+            url: 'http://localhost:32768/api/v1/goats',
+            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            type: 'post',
+            data: {},
+            success: function() {
+                
+            }
+        });
+    }
+
+    function exhibit_loui_product(){
+        $.ajax({
+            url: 'http://localhost:32768/api/v1/louis',
+            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            type: 'post',
+            data: {},
+            success: function() {
+                
+            }
+        });
     }
 </script>
 </body>

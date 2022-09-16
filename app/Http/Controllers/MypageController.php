@@ -22,7 +22,8 @@ class MypageController extends Controller
 		$user = Auth::user();
 		//::latest()->paginate(10);
 		$products = Products::where('site_url', 'https://www.goat.com/')->where('user_id', Auth::user()->id)->latest()->paginate(10);
-	
+		error_log('goat');
+		error_log($products);
 		if(!empty($_REQUEST['skeyword']) && $_REQUEST['skeyword'] != ""){
 			$products = Products::where('site_url', 'https://www.goat.com/')->where('product_name', 'LIKE', "%{$_REQUEST['skeyword']}%")->where('user_id', Auth::user()->id)->latest()->paginate(10);
 		}
@@ -161,12 +162,10 @@ class MypageController extends Controller
 	
 	}
 
-	public function dior(Request $request){
-	
+	public function dior(){
 		$user = Auth::user();
 		//::latest()->paginate(10);
 		$products = Products::where('site_url', 'https://www.dior.com/')->where('user_id', Auth::user()->id)->latest()->paginate(10);
-	
 		if(!empty($_REQUEST['skeyword']) && $_REQUEST['skeyword'] != ""){
 			$products = Products::where('site_url', 'https://www.dior.com/')->where('product_name', 'LIKE', "%{$_REQUEST['skeyword']}%")->where('user_id', Auth::user()->id)->latest()->paginate(10);
 		}
@@ -175,7 +174,6 @@ class MypageController extends Controller
         $end = $products->lastPage();
         
 		return view('mypage.dior', ['user' => $user, 'products'=>$products, 'now_page'=>$_REQUEST['page'], 'end_page'=>$end, 'skeyword'=>$_REQUEST['skeyword']]);
-	
 	}
 	
 	public function itemSave(Request $request) {

@@ -6,7 +6,7 @@ const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 var user_id = 1
 const url =
   'https://kpgnq6fji9-3.algolianet.com/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(4.13.1)%3B%20Browser'
-const site_url = 'https://www.dior.com'
+const site_url = 'https://www.dior.com/'
 
 class SneakersInfo {
   res = {}

@@ -1,6 +1,7 @@
 const db = require('../models')
 const axios = require('axios')
 const Products = db.products
+const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
 var user_id = 1
 var keyword = ''
@@ -174,7 +175,7 @@ function SneakersGetData(page) {
 
   axios
     .get(url, {})
-    .then((response) => {
+    .then(async (response) => {
       var res = response.data.hits
 
       if (res.length > 0) {
@@ -187,6 +188,9 @@ function SneakersGetData(page) {
           insert_query.product_id = res[i].productId
           //console.log("SnerksName:", insert_query.product_id);
           insert_query.product_img = res[i].image[0].contentUrl
+          local_img = 'images/' + new Date().getTime() + '.jpg'
+          await downloadImage(insert_query.product_img, local_img)
+          insert_query.product_local_img = local_img
           insert_query.product_name = res[i].name
           insert_query.product_comment = res[i].disambiguatingDescription
           insert_query.category = catergory_list[category]['c_name']
@@ -216,9 +220,9 @@ function SneakersGetData(page) {
           sneak.save_data()
         }
 
-        sn_now_page++
+        // sn_now_page++
 
-        SneakersGetData(sn_now_page)
+        // SneakersGetData(sn_now_page)
       } else {
         if (index < catergory_list[category]['code'].length - 1) {
           index++
