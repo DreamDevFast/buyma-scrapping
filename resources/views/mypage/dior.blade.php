@@ -16,8 +16,8 @@
                 <div class="col-lg-5 col-md-6 col-sm-12">                
                     <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
                     <button class="btn btn-warning btn-icon float-right" type="button" title="CSVダウンロード"  onclick="csv_down(4)"><i class="zmdi zmdi-download"></i></button>
-                    <button class="btn btn-warning btn-icon float-right" type="button" title="出品"  onclick="exhibit_dior_product()"><i class="zmdi zmdi-upload"></i></button>
-                    <button class="btn btn-success btn-icon float-right" type="button" title="商品追加"  data-toggle="modal" data-target="#defaultModal"><i class="zmdi zmdi-plus"></i></button>
+                    <button class="btn btn-warning btn-icon float-right" type="button" title="出品"  onclick="exhibit_dior_product()" <?php if(Auth::user()->status != 'init')echo 'disabled';?>><i class="zmdi zmdi-upload"></i></button>
+                    <button class="btn btn-success btn-icon float-right" type="button" title="商品追加"  data-toggle="modal" data-target="#defaultModal" <?php if(Auth::user()->status != 'init')echo 'disabled';?>><i class="zmdi zmdi-plus"></i></button>
                 </div>
             </div>
         </div>
@@ -31,9 +31,10 @@
                                     <tr>
                                         <th>画像</th>
                                         <th>商品名</th>
-                                        <th data-breakpoints="sm xs">商品詳細</th>
-                                        <th data-breakpoints="xs">商品価格</th>                                        
-                                        <th data-breakpoints="xs">Action</th>
+                                        <th data-breakpoints="md">商品詳細</th>
+                                        <th data-breakpoints="xs">商品価格</th>  
+                                        <th data-breakpoints="xs">状況</th>                                       
+                                        <th data-breakpoints="md">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -47,6 +48,7 @@
                                             </span>
                                         </td>
                                         <td>¥<?=number_format($product->product_price , 0,".",",")?></td>                                        
+                                        <td>{{$product->status}}</td>
                                         <td>                                            
                                             <a href="javascript:void(0);" class="btn btn-default waves-effect waves-float btn-sm waves-red"><i class="zmdi zmdi-delete"></i></a>
                                         </td>

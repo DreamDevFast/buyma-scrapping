@@ -265,16 +265,28 @@ exports.getInfo = (req, res) => {
 }
 
 exports.exhibit = (req, res) => {
+  const { user_id } = req.body
+
   Products.findAll({
     where: { user_id, site_url },
   })
     .then(async (products) => {
       if (products.length) {
+        const user = await Users.findOne({
+          where: { id: user_id },
+        })
+        user.status = 'exhibit'
+        await user.save()
+        res.status(200).json({ success: false })
+
         await loginBuyma()
         for (let i = 0; i < products.length; i++) {
-          await exhibitBuyma(products[i], i !== 0)
+          const success = await exhibitBuyma(products[i], i !== 0)
+          if (success) products[i].status = 'exhibit'
+          await products.save()
         }
-        res.status(200).json({ success: true })
+        user.status = 'init'
+        await user.save()
       }
     })
     .catch((err) => {

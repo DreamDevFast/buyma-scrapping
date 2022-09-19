@@ -145,8 +145,10 @@ const exhibitBuyma = async (product, isAlert) => {
     )
 
     await confirm_btn.click()
+    return true
   } catch (err) {
     console.log('exhibit buyma error: ', err)
+    return false
   }
 }
 

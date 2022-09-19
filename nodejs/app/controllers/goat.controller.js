@@ -1,6 +1,7 @@
 const db = require('../models')
 const axios = require('axios')
 const Products = db.products
+const Users = db.users
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
 var user_id = 1
@@ -121,7 +122,7 @@ function SneakersGetData(page) {
 
 exports.changeInfo = (req, res) => {}
 
-exports.getInfo = (req, res) => {
+exports.getInfo = async (req, res) => {
   try {
     if (req.query.sel > 0) {
       user_id = req.query.sel
@@ -132,6 +133,8 @@ exports.getInfo = (req, res) => {
       if (req.query.max_price > 0) max_price = req.query.max_price
 
       SneakersGetData(sn_now_page)
+
+      res.status(200).json({ success: true })
     } else {
       console.log('Sel is 0!')
     }
@@ -141,20 +144,30 @@ exports.getInfo = (req, res) => {
 }
 
 exports.exhibit = (req, res) => {
+  const { user_id } = req.body
   Products.findAll({
-    where: { user_id, site_url },
+    where: { user_id, site_url, status: 'init' },
   })
     .then(async (products) => {
       if (products.length) {
+        const user = await Users.findOne({
+          where: { id: user_id },
+        })
+        user.status = 'exhibit'
+        await user.save()
+        res.status(200).json({ success: false })
+
         await loginBuyma()
         for (let i = 0; i < products.length; i++) {
-          await exhibitBuyma(products[i], i !== 0)
+          const success = await exhibitBuyma(products[i], i !== 0)
+          if (success) products[i].status = 'exhibit'
+          await products.save()
         }
-        res.status(200).json({ success: true })
+        user.status = 'init'
+        await user.save()
       }
     })
     .catch((err) => {
       console.log('exhibit in goat error: ', err)
-      res.status(500).json({ success: false, error: err })
     })
 }

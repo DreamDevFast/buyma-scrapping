@@ -79,6 +79,7 @@ CREATE TABLE `products` (
   `tariff_` varchar(255) DEFAULT NULL,
   `exhibition_memo_` text DEFAULT NULL,
   `purchase_memo_` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'init',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
@@ -121,6 +122,7 @@ CREATE TABLE `users` (
   `role` enum('producer','worker') COLLATE utf8mb4_unicode_ci NOT NULL,
   `family_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cell_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'init',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),

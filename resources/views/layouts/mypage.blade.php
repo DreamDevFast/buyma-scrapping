@@ -63,7 +63,7 @@
                     <a class="image" href="profile.html"><img src="assets/images/profile_av.jpg" alt="User"></a>
                     <div class="detail">                    
                         <h4>{{Auth::user()->family_name}}</h4>
-                        <small>Super Admin</small>                        
+                        <small>{{Auth::user()->status}}</small>                        
                     </div>
                 </div>
             </li>
@@ -398,7 +398,9 @@
             url: 'http://localhost:32768/api/v1/dior',
             // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
             type: 'post',
-            data: {},
+            data: {
+                user_id: '{{Auth::user()->id}}'
+            },
             success: function() {
                 
             }
@@ -410,7 +412,9 @@
             url: 'http://localhost:32768/api/v1/burs',
             // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
             type: 'post',
-            data: {},
+            data: {
+                user_id: '{{Auth::user()->id}}'
+            },
             success: function() {
                 
             }
@@ -422,9 +426,11 @@
             url: 'http://localhost:32768/api/v1/goats',
             // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
             type: 'post',
-            data: {},
+            data: {
+                user_id: '{{Auth::user()->id}}'
+            },
             success: function() {
-                
+                window.location.reload()
             }
         });
     }
@@ -434,7 +440,9 @@
             url: 'http://localhost:32768/api/v1/louis',
             // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
             type: 'post',
-            data: {},
+            data: {
+                user_id: '{{Auth::user()->id}}'
+            },
             success: function() {
                 
             }
