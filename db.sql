@@ -140,7 +140,7 @@ DROP TABLE IF EXISTS `exhibitsettings`;
 CREATE TABLE `exhibitsettings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
-  `commision` int unsigned NOT NULL DEFAULT 7,
+  `commission` int unsigned NOT NULL DEFAULT 7,
   `comment` text DEFAULT '【商品説明】
 〇人気ブランドの在庫は変動が激しいため、ご購入前にお問い合わせより在庫の確認をお願い致します。
 〇商品は送料込みです。

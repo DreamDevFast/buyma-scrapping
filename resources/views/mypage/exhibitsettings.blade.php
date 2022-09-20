@@ -17,5 +17,24 @@
             </div>
         </div>
     </div>
+
+    <div class="container-fluid">
+        <div class="card">
+            <div class="body">
+                <div class="row clearfix">
+                    <div class="col-sm-6">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" value="{{$exhibitsettings->commission}}" />
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="input-group mb-3">
+                            <textarea class="form-control" rows="10">{{$exhibitsettings->comment}}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </section>

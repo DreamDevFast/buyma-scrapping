@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Products;
+use App\Models\ExhibitSettings;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -75,6 +76,20 @@ class MypageController extends Controller
 
 	}
 	
+	public function exhibitsettings() {
+		$user = Auth::user();
+		$exhibitsetting = ExhibitSettings::where('user_id', $user->id)->first();
+		$products = Products::where('site_url', 'https://it.louisvuitton.com/')->where('user_id', Auth::user()->id)->latest()->paginate(10);
+	
+		if(!empty($_REQUEST['skeyword']) && $_REQUEST['skeyword'] != ""){
+			$products = Products::where('site_url', 'https://it.louisvuitton.com/')->where('product_name', 'LIKE', "%{$_REQUEST['skeyword']}%")->where('user_id', Auth::user()->id)->latest()->paginate(10);
+		}
+		if(empty($_REQUEST['skeyword']))$_REQUEST['skeyword'] = "";
+        if(empty($_REQUEST['page']))$_REQUEST['page'] = 1;
+        $end = $products->lastPage();
+		return view('mypage.exhibitsettings', ['exhibitsettings' => $exhibitsetting, 'now_page'=>$_REQUEST['page'], 'end_page'=>$end, 'skeyword'=>$_REQUEST['skeyword']]);
+	}
+
 	public function count(request $request){
 		$cnt = 0;
 		$input = $request->all();
