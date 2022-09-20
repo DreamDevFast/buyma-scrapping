@@ -1,6 +1,7 @@
 const db = require('../models')
 const axios = require('axios')
 const Products = db.products
+const Users = db.users
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
 var user_id = 1
@@ -211,16 +212,17 @@ exports.exhibit = (req, res) => {
           user.status = 'exhibit'
           await user.save()
           res.status(200).json({ success: false })
-  
+
           await loginBuyma()
           for (let i = 0; i < products.length; i++) {
             const success = await exhibitBuyma(products[i], i !== 0)
             if (success) products[i].status = 'exhibit'
-            await products.save()
+            await products[i].save()
           }
           user.status = 'init'
           await user.save()
         }
+      }
     })
     .catch((err) => {
       console.log('exhibit in bur error: ', err)

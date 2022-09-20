@@ -82,12 +82,18 @@ const exhibitBuyma = async (product, isAlert) => {
       until.elementLocated(By.css('.Select-menu-outer div:nth-child(2)')),
       120000,
     )
-    let first_menu_item = await driver.findElement(
-      By.css('.Select-menu-outer div:nth-child(2)'),
+    let first_menu_items = await driver.findElements(
+      By.css('.Select-menu-outer div'),
     )
+
+    console.log(first_menu_items.length)
+    for (let i = 0; i < first_menu_items.length; i++) {
+      let text = await first_menu_items[i].getAttribute('class')
+      console.log(text)
+    }
     await driver.executeScript(
       'arguments[0].dispatchEvent(new MouseEvent("mousedown", {view: window,bubbles: true,cancelable: true,buttons: 1}));',
-      first_menu_item,
+      first_menu_items[3],
     )
 
     let checkboxs = await driver.findElements(By.className('bmm-c-checkbox'))
@@ -124,7 +130,6 @@ const exhibitBuyma = async (product, isAlert) => {
     let outer_divs = await driver.findElements(
       By.css('#react-tabs-3 .Select-menu-outer div'),
     )
-    console.log(await outer_divs[1].getAttribute('class'))
     await driver.executeScript(
       'arguments[0].dispatchEvent(new MouseEvent("mousedown", {view: window,bubbles: true,cancelable: true,buttons: 1}));',
       outer_divs[1],

@@ -160,8 +160,9 @@ exports.exhibit = (req, res) => {
         await loginBuyma()
         for (let i = 0; i < products.length; i++) {
           const success = await exhibitBuyma(products[i], i !== 0)
+          print(success)
           if (success) products[i].status = 'exhibit'
-          await products.save()
+          await products[i].save()
         }
         user.status = 'init'
         await user.save()

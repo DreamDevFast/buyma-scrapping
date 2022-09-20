@@ -1,6 +1,7 @@
 const db = require('../models')
 const axios = require('axios')
 const Products = db.products
+const Users = db.users
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
 var user_id = 1
@@ -8,6 +9,7 @@ const url =
   'https://kpgnq6fji9-3.algolianet.com/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(4.13.1)%3B%20Browser'
 const site_url = 'https://www.dior.com/'
 
+const categoriesMapping = {}
 class SneakersInfo {
   res = {}
   constructor(data) {
@@ -71,7 +73,8 @@ function SneakersGetData(page, hitsPerPage, query) {
   })
     .then(async (response) => {
       const results = response.data.results
-      let hits
+      console.log(results)
+      let hits = []
       if (results.length > 0) hits = results[0].hits
 
       for (var i = 0; i < hits.length; i++) {
@@ -153,7 +156,7 @@ const exhibit = (req, res) => {
         for (let i = 0; i < products.length; i++) {
           const success = await exhibitBuyma(products[i], i !== 0)
           if (success) products[i].status = 'exhibit'
-          await products.save()
+          await products[i].save()
         }
         user.status = 'init'
         await user.save()

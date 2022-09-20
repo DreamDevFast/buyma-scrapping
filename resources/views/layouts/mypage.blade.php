@@ -79,6 +79,7 @@
             <li <?php if(strpos(url()->current(), "changepass"))echo 'class="active open"';?>><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-flower"></i><span>設定管理</span></a>
                 <ul class="ml-menu">
                     <li><a href="./changepass">パスワード変更</a></li>
+                    <li><a href="./exhibitsettings">出品設定</a></li>
                 </ul>
             </li>   
             <li class=""><a href="./logout"><i class="zmdi zmdi-power"></i><span>ログアウト</span></a></li>         
@@ -402,6 +403,7 @@
                 user_id: '{{Auth::user()->id}}'
             },
             success: function() {
+                window.location.reload()
                 
             }
         });
@@ -416,6 +418,7 @@
                 user_id: '{{Auth::user()->id}}'
             },
             success: function() {
+                window.location.reload()
                 
             }
         });
@@ -444,6 +447,7 @@
                 user_id: '{{Auth::user()->id}}'
             },
             success: function() {
+                window.location.reload()
                 
             }
         });
