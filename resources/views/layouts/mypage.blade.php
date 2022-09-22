@@ -315,8 +315,7 @@
         $("#defaultModal").modal('hide');
 
         $.ajax({
-            url: 'http://localhost:32768/api/v1/goats/get_info?sel={{Auth::user()->id}}',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/goats/get_info?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/goats/get_info?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
                 category: $("#category").val(),
@@ -336,8 +335,7 @@
     function add_loui_product(){
         $("#defaultModal").modal('hide');
         $.ajax({
-            //url: 'http://localhost:32768/api/v1/louis/get_info?sel={{Auth::user()->id}}',
-            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/louis/get_info?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/louis/get_info?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
                 category: $("#category").val(),
@@ -354,8 +352,7 @@
     function add_bur_product(){
         $("#defaultModal").modal('hide');
         $.ajax({
-            //url: 'http://localhost:32768/api/v1/burs/get_info?sel={{Auth::user()->id}}',
-            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/burs/get_info?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/burs/get_info?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
                 category: $("#category").val(),
@@ -373,8 +370,7 @@
     function add_dior_product(){
         $("#defaultModal").modal('hide');
         $.ajax({
-            url: 'http://localhost:32768/api/v1/dior?sel={{Auth::user()->id}}',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/dior?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
                 category: $("#category").val(),
@@ -396,8 +392,7 @@
 
     function exhibit_dior_product(){
         $.ajax({
-            url: 'http://localhost:32768/api/v1/dior',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/dior',
             type: 'post',
             data: {
                 user_id: '{{Auth::user()->id}}'
@@ -411,8 +406,7 @@
 
     function exhibit_burberry_product(){
         $.ajax({
-            url: 'http://localhost:32768/api/v1/burs',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/burs',
             type: 'post',
             data: {
                 user_id: '{{Auth::user()->id}}'
@@ -426,8 +420,7 @@
 
     function exhibit_goat_product(){
         $.ajax({
-            url: 'http://localhost:32768/api/v1/goats',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/goats',
             type: 'post',
             data: {
                 user_id: '{{Auth::user()->id}}'
@@ -440,8 +433,7 @@
 
     function exhibit_loui_product(){
         $.ajax({
-            url: 'http://localhost:32768/api/v1/louis',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
+            url: '{{env('API_URL')}}/api/v1/louis',
             type: 'post',
             data: {
                 user_id: '{{Auth::user()->id}}'

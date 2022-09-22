@@ -1,12 +1,33 @@
 const fs = require('fs')
 const Axios = require('axios')
-const { Builder, Browser, By, Key, until } = require('selenium-webdriver')
+const {
+  Builder,
+  Browser,
+  By,
+  Key,
+  until,
+  Capabilities,
+} = require('selenium-webdriver')
+const { Options } = require('selenium-webdriver/chrome.js')
 const { resolve } = require('path')
 
 var driver
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time))
+}
+
 const loginBuyma = async () => {
   try {
-    driver = await new Builder().forBrowser(Browser.CHROME).build()
+    const options = new Options()
+    options.addArguments('--disable-dev-shm-usage')
+    options.addArguments('--no-sandbox')
+    // options.addArguments('--headless')
+
+    driver = await new Builder()
+      .forBrowser(Browser.CHROME)
+      .setChromeOptions(options)
+      .build()
+
     await driver.get('http://www.buyma.com/login')
     await driver
       .findElement(By.id('txtLoginId'))
@@ -14,7 +35,8 @@ const loginBuyma = async () => {
     await driver
       .findElement(By.id('txtLoginPass'))
       .sendKeys('st87533555', Key.RETURN)
-    let element = driver.findElement(By.id('login_do'))
+    await delay(1000)
+    let element = await driver.findElement(By.id('login_do'))
     await driver.executeScript('arguments[0].click();', element)
     await driver.wait(
       until.elementLocated(By.className('my-page-profile')),

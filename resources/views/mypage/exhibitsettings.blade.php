@@ -23,14 +23,22 @@
             <div class="body">
                 <div class="row clearfix">
                     <div class="col-sm-6">
+                        <div>Buyma手数料</div>
                         <div class="input-group mb-3">
                             <input type="text" class="form-control" value="{{$exhibitsettings->commission}}" />
+                            <div class="input-group-append">                                
+                                <span class="input-group-text" id="percentage-mark">%</span>
+                            </div> 
                         </div>
                     </div>
                     <div class="col-sm-12">
+                        <div>商品コメント</div>
                         <div class="input-group mb-3">
                             <textarea class="form-control" rows="10">{{$exhibitsettings->comment}}</textarea>
                         </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <button type="button" class="btn btn-raised btn-primary btn-round waves-effect" onclick="save()">保管</button>
                     </div>
                 </div>
             </div>
