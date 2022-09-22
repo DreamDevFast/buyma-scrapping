@@ -2,6 +2,8 @@ const db = require('../models')
 const axios = require('axios')
 const Products = db.products
 const Users = db.users
+const ExhibitSettings = db.exhibitsettings
+
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
 var user_id = 1
@@ -156,10 +158,17 @@ exports.exhibit = (req, res) => {
         user.status = 'exhibit'
         await user.save()
         res.status(200).json({ success: false })
-
+        const exhibitsettings = await ExhibitSettings.findOne({
+          where: { user_id },
+        })
+        // console.log(exhibitsettings)
         await loginBuyma()
         for (let i = 0; i < products.length; i++) {
-          const success = await exhibitBuyma(products[i], i !== 0)
+          const success = await exhibitBuyma(
+            products[i],
+            i !== 0,
+            exhibitsettings,
+          )
           if (success) products[i].status = 'exhibit'
           await products[i].save()
         }

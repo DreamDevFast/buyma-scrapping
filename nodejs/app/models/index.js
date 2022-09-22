@@ -18,5 +18,6 @@ db.sequelize = sequelize
 //const priceRevisions = db.price_revisions;
 db.products = require('./products.model.js')(sequelize, Sequelize)
 db.users = require('./users.model')(sequelize, Sequelize)
+db.exhibitsettings = require('./exhibitsettings.model')(sequelize, Sequelize)
 
 module.exports = db

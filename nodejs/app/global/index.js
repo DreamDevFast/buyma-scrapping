@@ -48,7 +48,7 @@ const loginBuyma = async () => {
   }
 }
 
-const exhibitBuyma = async (product, isAlert) => {
+const exhibitBuyma = async (product, isAlert, exhibitsettings) => {
   try {
     const {
       product_name,
@@ -81,7 +81,10 @@ const exhibitBuyma = async (product, isAlert) => {
     await text_fields[0].sendKeys(product_name, Key.RETURN) // set name of product
 
     let area_fields = await driver.findElements(By.className('bmm-c-textarea'))
-    await area_fields[0].sendKeys(product_comment, Key.RETURN) // set description of proudct
+    await area_fields[0].sendKeys(
+      product_comment + '\n' + exhibitsettings.comment,
+      Key.RETURN,
+    ) // set description of proudct
 
     let select_controls = await driver.findElements(
       By.className('Select-control'),
@@ -165,7 +168,10 @@ const exhibitBuyma = async (product, isAlert) => {
       By.css('.bmm-c-text-field.bmm-c-text-field--half-size-char'),
     )
 
-    await price_input.sendKeys(product_price, Key.RETURN)
+    await price_input.sendKeys(
+      (product_price * (exhibitsettings.commission + 100)) / 100,
+      Key.RETURN,
+    )
 
     let confirm_btn = await driver.findElement(
       By.css('.bmm-c-btn.bmm-c-btn--sec.bmm-c-btn--m.bmm-c-btn--thick'),
