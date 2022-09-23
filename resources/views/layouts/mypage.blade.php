@@ -42,13 +42,13 @@
 <div class="overlay"></div>
 
 <!-- Main Search -->
-<div id="search">
+<!-- <div id="search">
     <button id="close" type="button" class="close btn btn-primary btn-icon btn-icon-mini btn-round">x</button>
     <form>
       <input type="search" value="" placeholder="検索ワード入力..." id="skeyword" name="keyword" value="<?=$keyword?>"/>
       <button type="button" class="btn btn-primary" onclick="search()">商品検索</button>
     </form>
-</div>
+</div> -->
 <!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
     <div class="navbar-brand">
@@ -89,14 +89,14 @@
 </aside>
 
 <!-- Right Sidebar -->
-<div class="navbar-right">
+<!-- <div class="navbar-right">
     <ul class="navbar-nav">
         <li><a href="#search" class="main_search" title="商品検索..."><i class="zmdi zmdi-search"></i></a></li> 
-        <!-- <li><a href="sign-in.html" class="mega-menu" title="商品追加"><i class="zmdi zmdi-assignment"></i></a></li>
+        <li><a href="sign-in.html" class="mega-menu" title="商品追加"><i class="zmdi zmdi-assignment"></i></a></li>
         <li><a href="sign-in.html" class="mega-menu" title="CSVダウンロード"><i class="zmdi zmdi-swap-alt"></i></a></li>
-        <li><a href="sign-in.html" class="mega-menu" title="ログアウト"><i class="zmdi zmdi-power"></i></a></li> -->
+        <li><a href="sign-in.html" class="mega-menu" title="ログアウト"><i class="zmdi zmdi-power"></i></a></li> 
     </ul>
-</div>
+</div> -->
 
 <aside id="rightsidebar" class="right-sidebar">
     <ul class="nav nav-tabs sm">
@@ -315,11 +315,11 @@
     function csv_down(sel){
         location = "./csv_down?sel="+sel;
     }
-    localStorage.setItem('keyword', "<?=$keyword?>");
-    function search(){
-        localStorage.setItem('keyword', $("#keyword").val());
-        location = "./goatpage?page=<?=($now_page)?>&keyword="+localStorage.getItem("keyword");
-    }
+    // localStorage.setItem('keyword', "<?=$keyword?>");
+    // function search(){
+    //     localStorage.setItem('keyword', $("#keyword").val());
+    //     location = "./goatpage?page=<?=($now_page)?>&keyword="+localStorage.getItem("keyword");
+    // }
 </script>
 @stack('scripts')
 </body>
