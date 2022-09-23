@@ -94,7 +94,7 @@ function SneakersGetData(page, hitsPerPage, query) {
         insert_query.product_comment = hits[i].description
         insert_query.category = hits[i].categories_int.join('/')
 
-        insert_query.brand = ''
+        insert_query.brand = 'Dior'
 
         insert_query.season_ = ''
         insert_query.theme_ = ''

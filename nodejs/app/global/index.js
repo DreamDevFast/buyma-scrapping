@@ -55,6 +55,7 @@ const exhibitBuyma = async (product, isAlert, exhibitsettings) => {
       product_local_img,
       product_price,
       product_comment,
+      brand,
     } = product
     await driver.get('http://www.buyma.com/my/sell/new?tab=b')
 
@@ -121,8 +122,24 @@ const exhibitBuyma = async (product, isAlert, exhibitsettings) => {
       first_menu_items[3],
     )
 
-    let checkboxs = await driver.findElements(By.className('bmm-c-checkbox'))
-    await driver.executeScript('arguments[0].click();', checkboxs[0])
+    let brand_input = await driver.findElement(
+      By.css(
+        '.bmm-c-custom-text.bmm-c-custom-text--icon-left .bmm-c-text-field',
+      ),
+    )
+    await brand_input.sendKeys(brand, Key.RETURN)
+    await driver.wait(
+      until.elementsLocated(By.css('.bmm-c-suggest__content div'), 1000),
+    )
+    let suggest_content_first_div = await driver.findElement(
+      By.css('.bmm-c-suggest__content div'),
+    )
+    await driver.executeScript(
+      'arguments[0].click();',
+      suggest_content_first_div,
+    )
+    // let checkboxs = await driver.findElements(By.className('bmm-c-checkbox'))
+    // await driver.executeScript('arguments[0].click();', checkboxs[0])
 
     let react_tabs_2 = await driver.findElement(By.id('react-tabs-2'))
     await driver.executeScript('arguments[0].click();', react_tabs_2)

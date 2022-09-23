@@ -179,7 +179,7 @@ function SneakersGetData(page) {
     .get(url, {})
     .then(async (response) => {
       var res = response.data.hits
-
+      console.log(res)
       if (res.length > 0) {
         for (var i = 0; i < res.length; i++) {
           var insert_query = {}
@@ -197,7 +197,7 @@ function SneakersGetData(page) {
           insert_query.product_comment = res[i].disambiguatingDescription
           insert_query.category = catergory_list[category]['c_name']
 
-          insert_query.brand = catergory_list[category]['c_name']
+          insert_query.brand = 'Louis Vuitton'
 
           insert_query.season_ = ''
           insert_query.theme_ = ''

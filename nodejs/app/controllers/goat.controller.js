@@ -72,6 +72,9 @@ function SneakersGetData(page) {
     .get(url, {})
     .then(async (response) => {
       var res = response.data.response.results
+      let facets = response.data.response.facets
+
+      console.log(res)
       if (res.length > 0) {
         for (var i = 0; i < res.length; i++) {
           var insert_query = {}
@@ -91,7 +94,7 @@ function SneakersGetData(page) {
           insert_query.product_comment = res[i].value
           insert_query.category = res[i].data.category
 
-          insert_query.brand = val[0]
+          insert_query.brand = 'Goat'
 
           insert_query.season_ = ''
           insert_query.theme_ = ''

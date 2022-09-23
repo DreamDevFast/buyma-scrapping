@@ -114,7 +114,7 @@ function SneakersGetData(page) {
     .get(url, {})
     .then(async (response) => {
       var res = response.data.data.products
-
+      console.log(res)
       if (res.length > 0) {
         for (var i = 0; i < res.length; i++) {
           var insert_query = {}
@@ -133,7 +133,7 @@ function SneakersGetData(page) {
           insert_query.product_comment = res[i].content.description
           insert_query.category = catergory_list[category]['cat_name']
 
-          insert_query.brand = ''
+          insert_query.brand = 'Burberry'
 
           insert_query.season_ = ''
           insert_query.theme_ = ''
