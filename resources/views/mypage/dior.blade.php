@@ -177,5 +177,19 @@
 
         document.location.href = url
     }
+
+    function exhibit_dior_product(){
+        $.ajax({
+            url: '{{env('API_URL')}}/api/v1/dior',
+            type: 'post',
+            data: {
+                user_id: '{{Auth::user()->id}}'
+            },
+            success: function() {
+                window.location.reload()
+                
+            }
+        });
+    }
 </script>
 @endpush

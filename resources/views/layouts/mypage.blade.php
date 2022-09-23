@@ -312,127 +312,15 @@
     });
 </script>
 <script>
-    function add_goat_product(){        
-        $("#defaultModal").modal('hide');
-
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/goats/get_info?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
-        });
-		
-    }
     function csv_down(sel){
         location = "./csv_down?sel="+sel;
     }
-    function add_loui_product(){
-        $("#defaultModal").modal('hide');
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/louis/get_info?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
-        });
-        
-    }
-    function add_bur_product(){
-        $("#defaultModal").modal('hide');
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/burs/get_info?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
-        });
-        
-    }
-
-    
-
     localStorage.setItem('keyword', "<?=$keyword?>");
     function search(){
         localStorage.setItem('keyword', $("#keyword").val());
         location = "./goatpage?page=<?=($now_page)?>&keyword="+localStorage.getItem("keyword");
     }
-
-    function exhibit_dior_product(){
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/dior',
-            type: 'post',
-            data: {
-                user_id: '{{Auth::user()->id}}'
-            },
-            success: function() {
-                window.location.reload()
-                
-            }
-        });
-    }
-
-    function exhibit_burberry_product(){
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/burs',
-            type: 'post',
-            data: {
-                user_id: '{{Auth::user()->id}}'
-            },
-            success: function() {
-                window.location.reload()
-                
-            }
-        });
-    }
-
-    function exhibit_goat_product(){
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/goats',
-            type: 'post',
-            data: {
-                user_id: '{{Auth::user()->id}}'
-            },
-            success: function() {
-                window.location.reload()
-            }
-        });
-    }
-
-    function exhibit_loui_product(){
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/louis',
-            type: 'post',
-            data: {
-                user_id: '{{Auth::user()->id}}'
-            },
-            success: function() {
-                window.location.reload()
-                
-            }
-        });
-    }
 </script>
 @stack('scripts')
 </body>
-
-
 </html>

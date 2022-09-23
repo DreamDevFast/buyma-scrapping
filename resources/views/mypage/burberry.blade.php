@@ -163,5 +163,38 @@
         </div>
     </div>
 </div>
-<!-- Large 
 @endsection
+@push('scripts')
+<script>
+        function add_bur_product(){
+        $("#defaultModal").modal('hide');
+        $.ajax({
+            url: '{{env('API_URL')}}/api/v1/burs/get_info?sel={{Auth::user()->id}}',
+            type: 'get',
+            data: {
+                category: $("#category").val(),
+                keyword: $("#keyword").val(),
+                min_price: $("#min_price").val(),
+                max_price: $("#max_price").val(),
+            },
+            success: function() {
+                
+            }
+        }); 
+    }
+
+    function exhibit_burberry_product(){
+        $.ajax({
+            url: '{{env('API_URL')}}/api/v1/burs',
+            type: 'post',
+            data: {
+                user_id: '{{Auth::user()->id}}'
+            },
+            success: function() {
+                window.location.reload()
+                
+            }
+        });
+    }
+</script>
+@endpush
