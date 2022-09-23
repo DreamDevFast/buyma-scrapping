@@ -81,7 +81,6 @@ function SneakersGetData(page) {
 
           var val = res[i].value.split("'")
 
-          insert_query.user_id = user_id
           insert_query.site_url = site_url
 
           insert_query.product_id = res[i].data.id
@@ -151,7 +150,7 @@ exports.getInfo = async (req, res) => {
 exports.exhibit = (req, res) => {
   const { user_id } = req.body
   Products.findAll({
-    where: { user_id, site_url, status: 'init' },
+    where: { site_url },
   })
     .then(async (products) => {
       if (products.length) {
@@ -172,8 +171,6 @@ exports.exhibit = (req, res) => {
             i !== 0,
             exhibitsettings,
           )
-          if (success) products[i].status = 'exhibit'
-          await products[i].save()
         }
         user.status = 'init'
         await user.save()

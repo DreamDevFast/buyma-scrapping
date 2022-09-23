@@ -2,6 +2,7 @@ const db = require('../models')
 const axios = require('axios')
 const Products = db.products
 const Users = db.users
+const Brand = db.brand
 const ExhibitSettings = db.exhibitsettings
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
@@ -9,7 +10,7 @@ var user_id = 1
 const url =
   'https://kpgnq6fji9-3.algolianet.com/1/indexes/*/queries?x-algolia-agent=Algolia%20for%20JavaScript%20(4.13.1)%3B%20Browser'
 const site_url = 'https://www.dior.com/'
-
+var dior_brand
 const categoriesMapping = {}
 class SneakersInfo {
   res = {}
@@ -18,14 +19,12 @@ class SneakersInfo {
   }
   save_data() {
     Products.findAll({
-      where: { user_id: user_id, product_id: this.res.product_id, site_url },
+      where: { product_id: this.res.product_id, site_url },
     })
       .then((data) => {
-        console.log('data', data)
         if (data.length > 0) {
           Products.update(this.res, {
             where: {
-              user_id: user_id,
               product_id: this.res.product_id,
               site_url,
             },
@@ -34,15 +33,15 @@ class SneakersInfo {
               console.log('Update data Okay!')
             })
             .catch((err) => {
-              console.log('Update data Failed! -1')
+              console.log('Update data Failed!', err)
             })
         } else {
           Products.create(this.res)
             .then((num) => {
-              console.log('Update data Okay!')
+              console.log('Create data Okay!')
             })
             .catch((err) => {
-              console.log('Update data Failed! -2')
+              console.log('Create data Failed!', err)
             })
         }
       })
@@ -81,7 +80,6 @@ function SneakersGetData(page, hitsPerPage, query) {
       for (var i = 0; i < hits.length; i++) {
         var insert_query = {}
 
-        insert_query.user_id = user_id
         insert_query.site_url = site_url
 
         insert_query.product_id = hits[i].id
@@ -94,7 +92,7 @@ function SneakersGetData(page, hitsPerPage, query) {
         insert_query.product_comment = hits[i].description
         insert_query.category = hits[i].categories_int.join('/')
 
-        insert_query.brand = 'Dior'
+        insert_query.brand = dior_brand.id
 
         insert_query.season_ = ''
         insert_query.theme_ = ''
@@ -124,11 +122,16 @@ function SneakersGetData(page, hitsPerPage, query) {
     })
 }
 
-const getInfo = (req, res) => {
+const getInfo = async (req, res) => {
   try {
     if (req.query.sel > 0) {
       user_id = req.query.sel
       const keyword = req.query.keyword
+      dior_brand = await Brand.findOne({ where: { name: 'Dior' } })
+      if (dior_brand) {
+      } else {
+        dior_brand = await Brand.create({ name: 'Dior' })
+      }
       SneakersGetData(0, 25, keyword)
     }
     res.status(200).json({ success: true })
@@ -142,7 +145,7 @@ const exhibit = (req, res) => {
   const { user_id } = req.body
 
   Products.findAll({
-    where: { user_id, site_url },
+    where: { site_url },
   })
     .then(async (products) => {
       if (products.length) {
@@ -162,8 +165,6 @@ const exhibit = (req, res) => {
             i !== 0,
             exhibitsettings,
           )
-          if (success) products[i].status = 'exhibit'
-          await products[i].save()
         }
         user.status = 'init'
         await user.save()

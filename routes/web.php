@@ -11,6 +11,8 @@ use App\Http\Controllers\BaseController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MypageController;
+use App\Http\Controllers\FindAndSellController;
+
 
 // Homepage Route
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
@@ -42,7 +44,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('louipage', [MypageController::class, 'louipage'])->name('louipage');
     Route::get('burberry', [MypageController::class, 'burberry'])->name('burberry');
     Route::get('dior', [MypageController::class, 'dior'])->name('dior');
-
+    Route::get('findandsell', [FindAndSellController::class, 'index'])->name('findandsell');
 
     Route::get('changepass', [MypageController::class, 'changepass'])->name('changepass');
     Route::get('exhibitsettings', [MypageController::class, 'exhibitsettings'])->name('exhibitsettings');

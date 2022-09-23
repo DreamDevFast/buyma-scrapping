@@ -7,7 +7,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
-<title>:: Aero Bootstrap4 Admin :: Home</title>
+<title>Buyma出品する</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
 <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/charts-c3/plugin.css') }}"/>
@@ -45,7 +45,7 @@
 <div id="search">
     <button id="close" type="button" class="close btn btn-primary btn-icon btn-icon-mini btn-round">x</button>
     <form>
-      <input type="search" value="" placeholder="検索ワード入力..." id="skeyword" name="skeyword" value="<?=$skeyword?>"/>
+      <input type="search" value="" placeholder="検索ワード入力..." id="skeyword" name="keyword" value="<?=$keyword?>"/>
       <button type="button" class="btn btn-primary" onclick="search()">商品検索</button>
     </form>
 </div>
@@ -81,7 +81,8 @@
                     <li><a href="./changepass">パスワード変更</a></li>
                     <li><a href="./exhibitsettings">出品設定</a></li>
                 </ul>
-            </li>   
+            </li> 
+            <li class=""><a href="./findandsell"><i class="zmdi zmdi-search"></i><span>探して出品する</span></a></li> 
             <li class=""><a href="./logout"><i class="zmdi zmdi-power"></i><span>ログアウト</span></a></li>         
         </ul>
     </div>
@@ -367,27 +368,12 @@
         
     }
 
-    function add_dior_product(){
-        $("#defaultModal").modal('hide');
-        $.ajax({
-            url: '{{env('API_URL')}}/api/v1/dior?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
-        });
-        
-    }
-    localStorage.setItem('skeyword', "<?=$skeyword?>");
+    
+
+    localStorage.setItem('keyword', "<?=$keyword?>");
     function search(){
-        localStorage.setItem('skeyword', $("#skeyword").val());
-        location = "./goatpage?page=<?=($now_page)?>&skeyword="+localStorage.getItem("skeyword");
+        localStorage.setItem('keyword', $("#keyword").val());
+        location = "./goatpage?page=<?=($now_page)?>&keyword="+localStorage.getItem("keyword");
     }
 
     function exhibit_dior_product(){
@@ -445,6 +431,7 @@
         });
     }
 </script>
+@stack('scripts')
 </body>
 
 

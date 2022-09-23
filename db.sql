@@ -56,7 +56,6 @@ DROP TABLE IF EXISTS `products`;
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
   `site_url` varchar(255) DEFAULT NULL,
   `product_id` varchar(255) DEFAULT NULL,
   `product_img` text DEFAULT NULL,
@@ -64,7 +63,7 @@ CREATE TABLE `products` (
   `product_name` varchar(255) DEFAULT NULL,
   `product_comment` text DEFAULT NULL,
   `category` varchar(255) DEFAULT NULL,
-  `brand` varchar(255) DEFAULT NULL,
+  `brand` bigint(20) unsigned NOT NULL,
   `season_` varchar(255) DEFAULT NULL,
   `theme_` varchar(255) DEFAULT NULL,
   `size_color` varchar(100) DEFAULT NULL,
@@ -79,7 +78,6 @@ CREATE TABLE `products` (
   `tariff_` varchar(255) DEFAULT NULL,
   `exhibition_memo_` text DEFAULT NULL,
   `purchase_memo_` text DEFAULT NULL,
-  `status` varchar(20) DEFAULT 'init',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
@@ -166,6 +164,14 @@ CREATE TABLE `exhibitsettings` (
 〇丁寧に検品・梱包いたしますが、輸送中に箱に多少の汚れが残る場合がございますので、BUYMA補償制度あんしんプラスへのお申し込みもご検討ください。',
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `brands`;
+
+CREATE TABLE `brands` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 insert into `exhibitsettings`(`id`, `user_id`) values

@@ -2,9 +2,6 @@ module.exports = (sequelize, Sequelize) => {
   const products = sequelize.define(
     'products',
     {
-      user_id: {
-        type: Sequelize.INTEGER,
-      },
       site_url: {
         type: Sequelize.STRING,
       },
@@ -28,7 +25,7 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       brand: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       season_: {
         type: Sequelize.STRING,
