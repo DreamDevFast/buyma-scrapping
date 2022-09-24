@@ -2,7 +2,7 @@ const db = require('../models')
 const axios = require('axios')
 const Products = db.products
 const Users = db.users
-const Brand = db.brand
+const Brand = db.brands
 const ExhibitSettings = db.exhibitsettings
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 

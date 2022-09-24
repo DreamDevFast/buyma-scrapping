@@ -55,7 +55,7 @@ const exhibitBuyma = async (product, isAlert, exhibitsettings) => {
       product_local_img,
       product_price,
       product_comment,
-      brand,
+      bd,
     } = product
     await driver.get('http://www.buyma.com/my/sell/new?tab=b')
 
@@ -127,7 +127,7 @@ const exhibitBuyma = async (product, isAlert, exhibitsettings) => {
         '.bmm-c-custom-text.bmm-c-custom-text--icon-left .bmm-c-text-field',
       ),
     )
-    await brand_input.sendKeys(brand, Key.RETURN)
+    await brand_input.sendKeys(bd.name, Key.RETURN)
     await driver.wait(
       until.elementsLocated(By.css('.bmm-c-suggest__content div'), 1000),
     )

@@ -19,6 +19,8 @@ db.sequelize = sequelize
 db.products = require('./products.model.js')(sequelize, Sequelize)
 db.users = require('./users.model')(sequelize, Sequelize)
 db.exhibitsettings = require('./exhibitsettings.model')(sequelize, Sequelize)
-db.brand = require('./brand.model')(sequelize, Sequelize)
+db.brands = require('./brand.model')(sequelize, Sequelize)
+db.brands.hasMany(db.products, { as: 'pd', foreignKey: 'brand' })
+db.products.belongsTo(db.brands, { as: 'bd', foreignKey: 'brand' })
 
 module.exports = db

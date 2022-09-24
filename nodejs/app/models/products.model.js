@@ -24,9 +24,6 @@ module.exports = (sequelize, Sequelize) => {
       category: {
         type: Sequelize.STRING,
       },
-      brand: {
-        type: Sequelize.INTEGER,
-      },
       season_: {
         type: Sequelize.STRING,
       },
@@ -42,7 +39,13 @@ module.exports = (sequelize, Sequelize) => {
       deadline: {
         type: Sequelize.STRING,
       },
-
+      brand: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'brands',
+          key: 'id',
+        },
+      },
       place: {
         type: Sequelize.STRING,
       },
@@ -76,5 +79,6 @@ module.exports = (sequelize, Sequelize) => {
       timestamps: false,
     },
   )
+
   return products
 }

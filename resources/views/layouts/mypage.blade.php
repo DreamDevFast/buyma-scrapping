@@ -20,6 +20,7 @@
 <link href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
 
 <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+
 <style>
 .l-slategray_1 {
     background: linear-gradient(0deg, #777, #28a745) !important;
@@ -247,6 +248,7 @@
 <!-- Main Content -->
 @yield('content')
 <!-- Jquery Core Js --> 
+
 <script src="{{ asset('assets/bundles/libscripts.bundle.js') }}"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) --> 
 <script src="{{ asset('assets/bundles/vendorscripts.bundle.js') }}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
 

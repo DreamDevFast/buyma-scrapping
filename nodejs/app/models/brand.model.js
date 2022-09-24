@@ -1,7 +1,12 @@
 module.exports = (sequelize, Sequelize) => {
-  const brand = sequelize.define(
+  const brands = sequelize.define(
     'brands',
     {
+      id: {
+        type: Sequelize.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+      },
       name: {
         type: Sequelize.STRING,
       },
@@ -10,5 +15,6 @@ module.exports = (sequelize, Sequelize) => {
       timestamps: false,
     },
   )
-  return brand
+
+  return brands
 }

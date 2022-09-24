@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Products;
 use App\Models\ExhibitSettings;
+use App\Models\Brands;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -216,6 +217,53 @@ class MypageController extends Controller
         $end = $products->lastPage();
         error_log($request['min']);
 		return view('mypage.dior', ['user' => $user, 'products'=>$products, 'now_page'=>$request['page'], 'end_page'=>$end, 'keyword'=>$request['keyword'], 'min'=>$request['min'], 'max'=>$request['max']]);
+	}
+
+	public function findandsell(Request $request) {
+		$user = Auth::user();
+		$keyword = $request['keyword'];
+		$min = $request['min'];
+		$max = $request['max'];
+		$queryBrands = $request['brands'];
+		//::latest()->paginate(10);
+		$products = Products::where('products.id', '>', -1);
+		$query_items = [$keyword, $min, $max];
+		$operatiors = ['include', '>=', '<='];
+		$fields = ['', 'product_price', 'product_price'];
+
+		for ($i = 0; $i < 3; $i++) {
+			if (isset($query_items[$i])) {
+				if ($operatiors[$i] == 'include') {
+					$delimeter = ' ';
+					$keywords = explode($delimeter, $query_items[$i]);
+					foreach($keywords as $each){
+						$products = $products->where(function($query) use ($each){
+							 $query->where('product_name', 'like', '%' . $each . '%')
+								 ->orWhere('product_comment', 'like', '%' . $each . '%');
+							 });
+				 	}
+				}	
+				else {
+					$products = $products->where($fields[$i], $operatiors[$i], $query_items[$i]);
+				}
+			}
+		}
+
+		$products = $products->join('brands', 'products.brand', '=', 'brands.id')->select('products.*', 'brands.name')->paginate(10);
+
+		if(empty($request['keyword']))$request['keyword'] = "";
+        if(empty($request['page']))$request['page'] = 1;
+		if(empty($request['min']))$request['min'] = '';
+		if(empty($request['max']))$request['max'] = '';
+
+        $end = $products->lastPage();
+		$brands = Brands::all();
+		$currentbrands = ['-1'];
+		if(isset($queryBrands)) {
+			$currentbrands = explode('.', $queryBrands);
+		}
+		error_log(count($currentbrands));
+		return view('mypage.findandsell', ['user' => $user, 'products'=>$products, 'brands'=>$brands, 'currentbrands'=>$currentbrands, 'now_page'=>$request['page'], 'end_page'=>$end, 'keyword'=>$request['keyword'], 'min'=>$request['min'], 'max'=>$request['max']]);
 	}
 	
 	public function itemSave(Request $request) {
