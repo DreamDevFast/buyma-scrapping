@@ -37,10 +37,11 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING,
       },
       deadline: {
-        type: Sequelize.STRING,
+        type: Sequelize.DATE,
       },
       brand: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'brands',
           key: 'id',

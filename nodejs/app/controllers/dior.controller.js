@@ -98,7 +98,7 @@ function SneakersGetData(page, hitsPerPage, query) {
         insert_query.theme_ = ''
         insert_query.size_color = ''
         insert_query.delivery = ''
-        insert_query.deadline = ''
+        insert_query.deadline = new Date()
         insert_query.place = ''
         insert_query.shop_name_ = ''
         insert_query.shipping_place = ''

@@ -2,6 +2,7 @@ const db = require('../models')
 const axios = require('axios')
 const Products = db.products
 const Users = db.users
+const Brand = db.brands
 const ExhibitSettings = db.exhibitsettings
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
@@ -10,6 +11,7 @@ var keyword = ''
 var min_price = 0
 var max_price = 0
 var category = 'all'
+var burberry_brand
 const site_url = 'https://it.burberry.com/'
 // https://it.burberry.com/web-api/pages/products?location=/cat1350882/cat3300042/cat8610034&pagePath=/l/nuovi-arrivi-bambino/&offset=1&limit=1&country=IT&language=en
 var catergory_list = [
@@ -132,13 +134,13 @@ function SneakersGetData(page) {
           insert_query.product_comment = res[i].content.description
           insert_query.category = catergory_list[category]['cat_name']
 
-          insert_query.brand = 'Burberry'
+          insert_query.brand = burberry_brand.id
 
           insert_query.season_ = ''
           insert_query.theme_ = ''
           insert_query.size_color = ''
           insert_query.delivery = ''
-          insert_query.deadline = ''
+          insert_query.deadline = new Date()
           insert_query.place = ''
           insert_query.shop_name_ = 'AGGIORNAMENTI'
           insert_query.shipping_place = ''
@@ -176,13 +178,17 @@ function SneakersGetData(page) {
 
 exports.changeInfo = (req, res) => {}
 
-exports.getInfo = (req, res) => {
+exports.getInfo = async (req, res) => {
   console.log('Hi')
   try {
     if (req.query.sel > 0) {
       user_id = req.query.sel
       category = req.query.category
-
+      burberry_brand = await Brand.findOne({ where: { name: 'Burberry' } })
+      if (burberry_brand) {
+      } else {
+        burberry_brand = await Brand.create({ name: 'Burberry' })
+      }
       if (req.query.min_price > 0) min_price = req.query.min_price
 
       if (req.query.max_price > 0) max_price = req.query.max_price

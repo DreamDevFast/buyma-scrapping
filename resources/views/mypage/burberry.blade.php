@@ -166,7 +166,7 @@
 @endsection
 @push('scripts')
 <script>
-        function add_bur_product(){
+    function add_bur_product(){
         $("#defaultModal").modal('hide');
         $.ajax({
             url: '{{env('API_URL')}}/api/v1/burs/get_info?sel={{Auth::user()->id}}',

@@ -49,6 +49,13 @@ CREATE TABLE `personal_access_tokens` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Data for the table `personal_access_tokens` */
+DROP TABLE IF EXISTS `brands`;
+
+CREATE TABLE `brands` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Table structure for table `products` */
 
@@ -140,7 +147,15 @@ CREATE TABLE `exhibitsettings` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) unsigned NOT NULL,
   `commission` int unsigned NOT NULL DEFAULT 7,
-  `comment` text DEFAULT '【商品説明】
+  `comment` text NULL, 
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TRIGGER new_insert
+BEFORE INSERT ON `exhibitsettings`
+FOR EACH ROW 
+SET NEW.`comment` = CASE WHEN NEW.comment IS NULL THEN '【商品説明】
 〇人気ブランドの在庫は変動が激しいため、ご購入前にお問い合わせより在庫の確認をお願い致します。
 〇商品は送料込みです。
 〇ご購入手続き後のキャンセル・返品・交換は原則として対応いたしかねます。
@@ -162,18 +177,7 @@ CREATE TABLE `exhibitsettings` (
  在庫確認せずにご購入され在庫切れの際は「お客様都合」でのキャンセルとさせて頂きますことを
  予めご了承お願いします。
 〇在庫のご用意はありますが、完売の場合やむをえずご注文をキャンセルさせて頂くことがありますのでご了承お願いします。
-〇丁寧に検品・梱包いたしますが、輸送中に箱に多少の汚れが残る場合がございますので、BUYMA補償制度あんしんプラスへのお申し込みもご検討ください。',
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-DROP TABLE IF EXISTS `brands`;
-
-CREATE TABLE `brands` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+〇丁寧に検品・梱包いたしますが、輸送中に箱に多少の汚れが残る場合がございますので、BUYMA補償制度あんしんプラスへのお申し込みもご検討ください。' ELSE NEW.comment END;
 
 DROP TABLE IF EXISTS `temps`;
 
