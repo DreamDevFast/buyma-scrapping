@@ -73,13 +73,13 @@ class SneakersInfo {
   }
   save_data() {
     Products.findAll({
-      where: { user_id: user_id, product_id: this.res.product_id },
+      where: { product_id: this.res.product_id },
     })
       .then((data) => {
         console.log('data', data)
         if (data.length > 0) {
           Products.update(this.res, {
-            where: { user_id: user_id, product_id: this.res.product_id },
+            where: { product_id: this.res.product_id },
           })
             .then((num) => {
               console.log('Update data Okay!', this.res)
@@ -179,7 +179,6 @@ function SneakersGetData(page) {
 exports.changeInfo = (req, res) => {}
 
 exports.getInfo = async (req, res) => {
-  console.log('Hi')
   try {
     if (req.query.sel > 0) {
       user_id = req.query.sel

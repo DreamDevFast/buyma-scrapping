@@ -16,7 +16,7 @@
                 <div class="col-lg-5 col-md-6 col-sm-12">                
                     <button class="btn btn-primary btn-icon float-right right_icon_toggle_btn" type="button"><i class="zmdi zmdi-arrow-right"></i></button>
                     <button class="btn btn-warning btn-icon float-right" type="button" title="CSVダウンロード"  onclick="csv_down(3)"><i class="zmdi zmdi-download"></i></button>
-                    <button class="btn btn-warning btn-icon float-right" type="button" title="出品"  onclick="exhibit_burberry_product()" <?php if(Auth::user()->status != 'init')echo 'disabled';?>><i class="zmdi zmdi-upload"></i></button>
+                    <!-- <button class="btn btn-warning btn-icon float-right" type="button" title="出品"  onclick="exhibit_burberry_product()" <?php if(Auth::user()->status != 'init')echo 'disabled';?>><i class="zmdi zmdi-upload"></i></button> -->
                     <button class="btn btn-success btn-icon float-right" type="button" title="商品追加"  data-toggle="modal" data-target="#defaultModal" <?php if(Auth::user()->status != 'init')echo 'disabled';?>><i class="zmdi zmdi-plus"></i></button>
                 </div>
             </div>
@@ -168,19 +168,34 @@
 <script>
     function add_bur_product(){
         $("#defaultModal").modal('hide');
+        let category = $("#category").val(), keyword = $("#keyword").val(), min = $("#min_price").val(), max = $("#max_price").val();
+
+        let queries = { keyword, min, max }, url = './burberry', querystring = '';
+        let keys = Object.keys(queries);
+        for (let i = 0; i < keys.length; i++) {
+            if (queries[keys[i]] !== '') {
+                querystring += `${keys[i]}=${queries[keys[i]]}&`
+            }
+        }
+        if (querystring !== '') {
+            url += '?' + querystring;
+            url = url.slice(0, -1)
+        }
+
         $.ajax({
             url: '{{env('API_URL')}}/api/v1/burs/get_info?sel={{Auth::user()->id}}',
             type: 'get',
             data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
+                category,
+                keyword,
+                min_price: min,
+                max_price: max,
             },
             success: function() {
                 
             }
         }); 
+        document.location.href = './burberry'
     }
 
     function exhibit_burberry_product(){

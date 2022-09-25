@@ -164,17 +164,43 @@ class MypageController extends Controller
 	public function burberry(Request $request){
 	
 		$user = Auth::user();
+		$keyword = $request['keyword'];
+		$min = $request['min'];
+		$max = $request['max'];
 		//::latest()->paginate(10);
-		$products = Products::where('site_url', 'https://it.burberry.com/')->paginate(10);
-	
-		if(!empty($_REQUEST['keyword']) && $_REQUEST['keyword'] != ""){
-			$products = Products::where('site_url', 'https://it.burberry.com/')->where('product_name', 'LIKE', "%{$_REQUEST['keyword']}%")->paginate(10);
+		$products = Products::where('site_url', 'https://it.burberry.com/');
+		$query_items = [$keyword, $min, $max];
+		$operatiors = ['include', '>=', '<='];
+		$fields = ['', 'product_price', 'product_price'];
+
+		for ($i = 0; $i < 3; $i++) {
+			if (isset($query_items[$i])) {
+				if ($operatiors[$i] == 'include') {
+					$delimeter = ' ';
+					$keywords = explode($delimeter, $query_items[$i]);
+					foreach($keywords as $each){
+						$products = $products->where(function($query) use ($each){
+							 $query->where('product_name', 'like', '%' . $each . '%')
+								 ->orWhere('product_comment', 'like', '%' . $each . '%');
+							 });
+				 	}
+				}	
+				else {
+					$products = $products->where($fields[$i], $operatiors[$i], $query_items[$i]);
+				}
+			}
 		}
-		if(empty($_REQUEST['keyword']))$_REQUEST['keyword'] = "";
-        if(empty($_REQUEST['page']))$_REQUEST['page'] = 1;
+
+		$products = $products->paginate(10);
+
+		if(empty($request['keyword']))$request['keyword'] = "";
+        if(empty($request['page']))$request['page'] = 1;
+		if(empty($request['min']))$request['min'] = '';
+		if(empty($request['max']))$request['max'] = '';
+
         $end = $products->lastPage();
-        
-		return view('mypage.burberry', ['user' => $user, 'products'=>$products, 'now_page'=>$_REQUEST['page'], 'end_page'=>$end, 'keyword'=>$_REQUEST['keyword']]);
+        error_log($request['min']);
+		return view('mypage.burberry', ['user' => $user, 'products'=>$products, 'now_page'=>$request['page'], 'end_page'=>$end, 'keyword'=>$request['keyword'], 'min'=>$request['min'], 'max'=>$request['max']]);
 	
 	}
 
@@ -227,13 +253,13 @@ class MypageController extends Controller
 		$queryBrands = $request['brands'];
 		//::latest()->paginate(10);
 		$products = Products::where('products.id', '>', -1);
-		$query_items = [$keyword, $min, $max];
-		$operatiors = ['include', '>=', '<='];
-		$fields = ['', 'product_price', 'product_price'];
+		$query_items = [$keyword, $min, $max, $queryBrands];
+		$operatiors = ['included', '>=', '<=', 'includes'];
+		$fields = ['', 'product_price', 'product_price', 'brand'];
 
-		for ($i = 0; $i < 3; $i++) {
+		for ($i = 0; $i < 4; $i++) {
 			if (isset($query_items[$i])) {
-				if ($operatiors[$i] == 'include') {
+				if ($operatiors[$i] == 'included') {
 					$delimeter = ' ';
 					$keywords = explode($delimeter, $query_items[$i]);
 					foreach($keywords as $each){
@@ -242,6 +268,11 @@ class MypageController extends Controller
 								 ->orWhere('product_comment', 'like', '%' . $each . '%');
 							 });
 				 	}
+				}
+				else if ($operatiors[$i] == 'includes') {
+					$delimeter = '.';
+					$brandIds = explode($delimeter, $query_items[$i]);
+					$products = $products->whereIn('brand', $brandIds);
 				}	
 				else {
 					$products = $products->where($fields[$i], $operatiors[$i], $query_items[$i]);
@@ -296,4 +327,16 @@ class MypageController extends Controller
 		}
 	}
 	
+	public function changeExhibitSettings(Request $request) {
+		$user = Auth::user();
+		$commission = $request['commission'];
+		$comment = $request['comment'];
+		
+		if (isset($commission) && isset($comment)) {
+			ExhibitSettings::where('user_id', $user->id)->update(['commission' => $commission, 'comment' => $comment]);
+		}
+		$exhibitsetting = ExhibitSettings::where('user_id', $user->id)->first();
+		error_log($exhibitsetting->comment);
+		return view('mypage.exhibitsettings', ['exhibitsettings' => $exhibitsetting]);
+	}
 }

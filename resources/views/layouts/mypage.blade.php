@@ -46,7 +46,7 @@
 <!-- <div id="search">
     <button id="close" type="button" class="close btn btn-primary btn-icon btn-icon-mini btn-round">x</button>
     <form>
-      <input type="search" value="" placeholder="検索ワード入力..." id="skeyword" name="keyword" value="<?=$keyword?>"/>
+      <input type="search" value="" placeholder="検索ワード入力..." id="skeyword" name="keyword" value=""/>
       <button type="button" class="btn btn-primary" onclick="search()">商品検索</button>
     </form>
 </div> -->
@@ -317,10 +317,10 @@
     function csv_down(sel){
         location = "./csv_down?sel="+sel;
     }
-    // localStorage.setItem('keyword', "<?=$keyword?>");
+    // localStorage.setItem('keyword', "$keyword");
     // function search(){
     //     localStorage.setItem('keyword', $("#keyword").val());
-    //     location = "./goatpage?page=<?=($now_page)?>&keyword="+localStorage.getItem("keyword");
+    //     location = "./goatpage?page=$now_page)?>&keyword="+localStorage.getItem("keyword");
     // }
 </script>
 @stack('scripts')

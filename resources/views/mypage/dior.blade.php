@@ -163,7 +163,6 @@
             }
         });
         let queries = { keyword, min, max }, url = './dior', querystring = '';
-        console.log(queries)
         let keys = Object.keys(queries);
         for (let i = 0; i < keys.length; i++) {
             if (queries[keys[i]] !== '') {
@@ -175,7 +174,7 @@
             url = url.slice(0, -1)
         }
 
-        document.location.href = url
+        document.location.href = './dior'
     }
 
     function exhibit_dior_product(){

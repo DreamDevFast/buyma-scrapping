@@ -87,51 +87,51 @@
                             if($end_page < 8){
                                 for($i = 1; $i < $end_page; $i++){
                             ?>
-                                <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=$i?>"><?=$i?></a></li>
+                                <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=$i?>"><?=$i?></a></li>
                                 
                             <?php }
                             }else{
                                 if($now_page < 8){
                                     for($i = 1; $i < 6; $i++){
                                         ?>
-                                            <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=$i?>"><?=$i?></a></li>                                            
+                                            <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=$i?>"><?=$i?></a></li>                                            
                                     <?php } ?>
                                     
                                     <?php if($end_page >= 7){?>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=6">...</a></li>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($end_page)?>"><?=($end_page)?></a></li>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?page=<?=($now_page + 7)?>&keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=6">...</a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($end_page)?>"><?=($end_page)?></a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?page=<?=($now_page + 7)?>&keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
                                     <?php } else{?>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=6?>">6</a></li>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=7?>">7</a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=6?>">6</a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=7?>">7</a></li>
                                     <?php }?>
 
                                     <?php
                                 }else if($now_page > $end_page - 7){
                                     ?>
-                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($end_page - 7)?>"><i class="zmdi zmdi-arrow-left"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($end_page - 7)?>"><i class="zmdi zmdi-arrow-left"></i></a></li>
                                     <?php
                                     for($i = $end_page - 6; $i < $end_page + 1; $i++){
                                         ?>
-                                            <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=$i?>"><?=$i?></a></li>                                            
+                                            <li class="page-item <?php if($now_page == $i)echo 'active';?>"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=$i?>"><?=$i?></a></li>                                            
                                     <?php } ?>                                    
                                     <?php
                                 }else{?>
 
-                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($now_page - 7)?>"><i class="zmdi zmdi-arrow-left"></i></a></li>
+                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($now_page - 7)?>"><i class="zmdi zmdi-arrow-left"></i></a></li>
                                     
-                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=1">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($now_page-2)?>">...</a></li>                                            
-                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($now_page-1)?>"><?=($now_page-1)?></a></li>
-                                    <li class="page-item active"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($now_page)?>"><?=($now_page)?></a></li>
-                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($now_page+1)?>"><?=($now_page+1)?></a></li>  
-                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($now_page+2)?>">...</a></li>                                      
+                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=1">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($now_page-2)?>">...</a></li>                                            
+                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($now_page-1)?>"><?=($now_page-1)?></a></li>
+                                    <li class="page-item active"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($now_page)?>"><?=($now_page)?></a></li>
+                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($now_page+1)?>"><?=($now_page+1)?></a></li>  
+                                    <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($now_page+2)?>">...</a></li>                                      
                                     
                                     <?php if($end_page >= ($now_page + 3)){?>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($end_page)?>"><?=($end_page)?></a></li>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?page=<?=($now_page + 7)?>&min=<?=$min?>&max=<?=$max?>&keyword=<?=$keyword?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($end_page)?>"><?=($end_page)?></a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?page=<?=($now_page + 7)?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&keyword=<?=$keyword?>"><i class="zmdi zmdi-arrow-right"></i></a></li>
                                     <?php } else{?>
-                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&page=<?=($now_page+3)?>"><?=($now_page+3)?></a></li>
+                                        <li class="page-item"><a class="page-link" href="./findandsell?keyword=<?=$keyword?>&min=<?=$min?>&max=<?=$max?>&brands=<?=implode($currentbrands, '.')?>&page=<?=($now_page+3)?>"><?=($now_page+3)?></a></li>
                                     <?php }?>
                             <?php 
                                 }
@@ -169,7 +169,9 @@
         }
         
         if (brands.length !== 0) {
-            url += '&brands=' + brands.join('.')
+            if (querystring !== '') url += '&'
+            else url += '?'
+            url += 'brands=' + brands.join('.')
             localStorage.setItem('checkedIds', '')
             document.location.href = url
         }

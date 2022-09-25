@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('changepass', [MypageController::class, 'changepass'])->name('changepass');
     Route::get('exhibitsettings', [MypageController::class, 'exhibitsettings'])->name('exhibitsettings');
+    Route::post('exhibitsettings', [MypageController::class, 'changeExhibitSettings'])->name('changeExhibitSettings');
+
     Route::get('changepass_check', [MypageController::class, 'changepass_check'])->name('changepass_check');
 
     Route::get('csv_down', [MypageController::class, 'csv_down'])->name('csv_down');

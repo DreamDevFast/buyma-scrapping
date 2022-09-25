@@ -148,6 +148,8 @@ CREATE TABLE `exhibitsettings` (
   `user_id` bigint(20) unsigned NOT NULL,
   `commission` int unsigned NOT NULL DEFAULT 7,
   `comment` text NULL, 
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
