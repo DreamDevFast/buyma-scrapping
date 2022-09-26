@@ -4,6 +4,7 @@ const goat = require('./goat.route')
 const loui = require('./loui.route')
 const bur = require('./bur.route')
 const dior = require('./dior.route')
+const gucci = require('./gucci.route')
 const exhibit = require('./exhibit.route')
 
 const cors = require('cors')
@@ -19,6 +20,7 @@ const initializeRoute = (app) => {
   router.use('/louis', loui)
   router.use('/burs', bur)
   router.use('/dior', dior)
+  router.use('/gucci', gucci)
   router.use('/exhibit', exhibit)
 
   app.use('/api/v1', router)

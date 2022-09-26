@@ -43,6 +43,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('louipage', [MypageController::class, 'louipage'])->name('louipage');
     Route::get('burberry', [MypageController::class, 'burberry'])->name('burberry');
     Route::get('dior', [MypageController::class, 'dior'])->name('dior');
+    Route::get('gucci', [MypageController::class, 'gucci'])->name('gucci');
+
     Route::get('findandsell', [MypageController::class, 'findandsell'])->name('findandsell');
 
     Route::get('changepass', [MypageController::class, 'changepass'])->name('changepass');

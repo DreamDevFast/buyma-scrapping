@@ -37,19 +37,45 @@ class MypageController extends Controller
 	}
 
 
-	public function louipage(){
+	public function louipage(Request $request){
 		$user = Auth::user();
+		$keyword = $request['keyword'];
+		$min = $request['min'];
+		$max = $request['max'];
 		//::latest()->paginate(10);
-		$products = Products::where('site_url', 'https://it.louisvuitton.com/')->paginate(10);
-	
-		if(!empty($_REQUEST['keyword']) && $_REQUEST['keyword'] != ""){
-			$products = Products::where('site_url', 'https://it.louisvuitton.com/')->where('product_name', 'LIKE', "%{$_REQUEST['keyword']}%")->paginate(10);
+		$products = Products::where('site_url', 'https://it.louisvuitton.com/');
+		$query_items = [$keyword, $min, $max];
+		$operatiors = ['include', '>=', '<='];
+		$fields = ['', 'product_price', 'product_price'];
+
+		for ($i = 0; $i < 3; $i++) {
+			if (isset($query_items[$i])) {
+				if ($operatiors[$i] == 'include') {
+					$delimeter = ' ';
+					$keywords = explode($delimeter, $query_items[$i]);
+					foreach($keywords as $each){
+						$products = $products->where(function($query) use ($each){
+							 $query->where('product_name', 'like', '%' . $each . '%')
+								 ->orWhere('product_comment', 'like', '%' . $each . '%');
+							 });
+				 	}
+				}	
+				else {
+					$products = $products->where($fields[$i], $operatiors[$i], $query_items[$i]);
+				}
+			}
 		}
-		if(empty($_REQUEST['keyword']))$_REQUEST['keyword'] = "";
-        if(empty($_REQUEST['page']))$_REQUEST['page'] = 1;
+
+		$products = $products->paginate(10);
+
+		if(empty($request['keyword']))$request['keyword'] = "";
+        if(empty($request['page']))$request['page'] = 1;
+		if(empty($request['min']))$request['min'] = '';
+		if(empty($request['max']))$request['max'] = '';
+
         $end = $products->lastPage();
-        
-		return view('mypage.louipage', ['user' => $user, 'products'=>$products, 'now_page'=>$_REQUEST['page'], 'end_page'=>$end, 'keyword'=>$_REQUEST['keyword']]);
+        error_log($request['min']);
+		return view('mypage.louipage', ['user' => $user, 'products'=>$products, 'now_page'=>$request['page'], 'end_page'=>$end, 'keyword'=>$request['keyword'], 'min'=>$request['min'], 'max'=>$request['max']]);
 	}
 
 	public function changepass(){
@@ -243,6 +269,47 @@ class MypageController extends Controller
         $end = $products->lastPage();
         error_log($request['min']);
 		return view('mypage.dior', ['user' => $user, 'products'=>$products, 'now_page'=>$request['page'], 'end_page'=>$end, 'keyword'=>$request['keyword'], 'min'=>$request['min'], 'max'=>$request['max']]);
+	}
+
+	public function gucci(Request $request){
+		$user = Auth::user();
+		$keyword = $request['keyword'];
+		$min = $request['min'];
+		$max = $request['max'];
+		//::latest()->paginate(10);
+		$products = Products::where('site_url', 'https://www.gucci.com/');
+		$query_items = [$keyword, $min, $max];
+		$operatiors = ['include', '>=', '<='];
+		$fields = ['', 'product_price', 'product_price'];
+
+		for ($i = 0; $i < 3; $i++) {
+			if (isset($query_items[$i])) {
+				if ($operatiors[$i] == 'include') {
+					$delimeter = ' ';
+					$keywords = explode($delimeter, $query_items[$i]);
+					foreach($keywords as $each){
+						$products = $products->where(function($query) use ($each){
+							 $query->where('product_name', 'like', '%' . $each . '%')
+								 ->orWhere('product_comment', 'like', '%' . $each . '%');
+							 });
+				 	}
+				}	
+				else {
+					$products = $products->where($fields[$i], $operatiors[$i], $query_items[$i]);
+				}
+			}
+		}
+
+		$products = $products->paginate(10);
+
+		if(empty($request['keyword']))$request['keyword'] = "";
+        if(empty($request['page']))$request['page'] = 1;
+		if(empty($request['min']))$request['min'] = '';
+		if(empty($request['max']))$request['max'] = '';
+
+        $end = $products->lastPage();
+        error_log($request['min']);
+		return view('mypage.gucci', ['user' => $user, 'products'=>$products, 'now_page'=>$request['page'], 'end_page'=>$end, 'keyword'=>$request['keyword'], 'min'=>$request['min'], 'max'=>$request['max']]);
 	}
 
 	public function findandsell(Request $request) {

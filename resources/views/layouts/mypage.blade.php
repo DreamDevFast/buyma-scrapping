@@ -74,7 +74,8 @@
                     <li><a href="./goatpage">www.goat.com</a></li>
                     <li><a href="./louipage">it.louisvuitton.com</a></li>
                     <li><a href="./burberry">it.burberry.com</a></li>  
-                    <li><a href="./dior">www.dior.com</a></li>             
+                    <li><a href="./dior">www.dior.com</a></li>  
+                    <li><a href="./gucci">www.gucci.com</a></li>             
                 </ul>
             </li>            
             <li <?php if(strpos(url()->current(), "changepass"))echo 'class="active open"';?>><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-flower"></i><span>設定管理</span></a>
