@@ -134,11 +134,11 @@
                     <div class="col-lg-4 col-md-4 col-sm-4"> ワード</div>
                     <div class="col-lg-8 col-md-8 col-sm-8"><input type="text" class="form-control" id="keyword" name="keyword" value="<?=$keyword?>"></div>
                 </div>
-                <div class="row" style="margin:5px 5px 5px 5px">
+                <!-- <div class="row" style="margin:5px 5px 5px 5px">
                     <div class="col-lg-4 col-md-4 col-sm-4"> 価格帯</div>
                     <div class="col-lg-4 col-md-4 col-sm-4"><input type="number" class="form-control" id="min_price" name="min_price" value="<?=$min?>"></div>
                     <div class="col-lg-4 col-md-4 col-sm-4"><input type="number" class="form-control" id="max_price" name="max_price" value="<?=$max?>"></div>
-                </div>
+                </div> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary waves-effect" onclick="add_dior_product()">追加</button>

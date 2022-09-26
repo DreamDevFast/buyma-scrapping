@@ -188,9 +188,9 @@ exports.getInfo = async (req, res) => {
       } else {
         burberry_brand = await Brand.create({ name: 'Burberry' })
       }
-      if (req.query.min_price > 0) min_price = req.query.min_price
+      // if (req.query.min_price > 0) min_price = req.query.min_price
 
-      if (req.query.max_price > 0) max_price = req.query.max_price
+      // if (req.query.max_price > 0) max_price = req.query.max_price
       sn_now_page = 1
 
       SneakersGetData(sn_now_page)
