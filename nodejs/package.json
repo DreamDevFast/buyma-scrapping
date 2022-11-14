@@ -18,19 +18,15 @@
   "author": "bezkoder",
   "license": "ISC",
   "dependencies": {
-    "amazon-paapi": "^1.0.6",
-    "amazon-sp-api": "^0.7.9",
     "axios": "^0.27.2",
     "axis": "^1.0.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
     "mysql2": "^2.3.3",
-    "paapi5-nodejs-sdk": "^1.1.0",
     "path": "^0.12.7",
     "save": "^2.5.0",
     "selenium-webdriver": "^4.4.0",
-    "sequelize": "^6.21.0",
-    "xml2js": "^0.4.23"
+    "sequelize": "^6.21.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

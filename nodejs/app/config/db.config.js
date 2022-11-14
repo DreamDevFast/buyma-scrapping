@@ -13,8 +13,8 @@
 // };
 module.exports = {
   HOST: 'localhost',
-  USER: 'root',
-  PASSWORD: '',
+  USER: 'sammy',
+  PASSWORD: 'password',
   DB: 'buyma',
   dialect: 'mysql',
   pool: {

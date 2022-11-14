@@ -4,8 +4,11 @@ const goat = require('./goat.route')
 const loui = require('./loui.route')
 const bur = require('./bur.route')
 const dior = require('./dior.route')
-
-const yahoo = require('./yahoo.route')
+const gucci = require('./gucci.route')
+const exhibit = require('./exhibit.route')
+const chanel = require('./chanel.route')
+const balenciaga = require('./balenciaga.route')
+const givenchy = require('./givenchy.route')
 const cors = require('cors')
 const corsOptions = {
   origin: '*',
@@ -19,7 +22,12 @@ const initializeRoute = (app) => {
   router.use('/louis', loui)
   router.use('/burs', bur)
   router.use('/dior', dior)
-  router.use('/yahoos', yahoo)
+  router.use('/gucci', gucci)
+  router.use('/exhibit', exhibit)
+  router.use('/chanel', chanel)
+  router.use('/balenciaga', balenciaga)
+  router.use('/givenchy', givenchy)
+
   app.use('/api/v1', router)
 }
 

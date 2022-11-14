@@ -1,6 +1,9 @@
 const db = require('../models')
 const axios = require('axios')
 const Products = db.products
+const Users = db.users
+const Brand = db.brands
+const ExhibitSettings = db.exhibitsettings
 const { downloadImage, loginBuyma, exhibitBuyma } = require('../global')
 
 var user_id = 1
@@ -8,6 +11,7 @@ var keyword = ''
 var min_price = 0
 var max_price = 0
 var category = 'all'
+var burberry_brand
 const site_url = 'https://it.burberry.com/'
 // https://it.burberry.com/web-api/pages/products?location=/cat1350882/cat3300042/cat8610034&pagePath=/l/nuovi-arrivi-bambino/&offset=1&limit=1&country=IT&language=en
 var catergory_list = [
@@ -69,13 +73,13 @@ class SneakersInfo {
   }
   save_data() {
     Products.findAll({
-      where: { user_id: user_id, product_id: this.res.product_id },
+      where: { product_id: this.res.product_id },
     })
       .then((data) => {
         console.log('data', data)
         if (data.length > 0) {
           Products.update(this.res, {
-            where: { user_id: user_id, product_id: this.res.product_id },
+            where: { product_id: this.res.product_id },
           })
             .then((num) => {
               console.log('Update data Okay!', this.res)
@@ -101,23 +105,30 @@ class SneakersInfo {
 
 function SneakersGetData(page) {
   var url =
-    'https://it.burberry.com/web-api/pages/products?' +
-    catergory_list[category]['location'] +
+    'https://jp.burberry.com/web-api/search?facetsUrl=/&language=ja&country=JP&q=' +
+    keyword +
     '&offset=' +
     (page - 1) * 100
 
   console.log('url>>>', url)
 
-  axios
-    .get(url, {})
+  axios({
+    url: encodeURI(url),
+    headers: {
+      'correlation-id': '7596dadb-813b-4563-94eb-354ea4b0b96b',
+      newrelic:
+        'eyJ2IjpbMCwxXSwiZCI6eyJ0eSI6IkJyb3dzZXIiLCJhYyI6IjIwOTYxMjAiLCJhcCI6IjI0NDE5MjcxOCIsImlkIjoiOTE0ZjE3MDg3MmM2MGU3ZiIsInRyIjoiYzA3ZWFjMTdjYjQ4MmZmYWI2NTY4MzA0YjNkMzA5MGUiLCJ0aSI6MTY2NTA5NzAyNjI4NywidGsiOiIzNDk1NzcifX0=',
+      'x-atg-burberryid': '00b1cc01-9a58-4c60-adac-fe3c62b6a41e_NULL_NULL_NULL',
+      'x-newrelic-id': 'VgYOV1dRCBACUFVTDgMHUlE=',
+    },
+  })
     .then(async (response) => {
       var res = response.data.data.products
-
+      console.log(res)
       if (res.length > 0) {
         for (var i = 0; i < res.length; i++) {
           var insert_query = {}
 
-          insert_query.user_id = user_id
           insert_query.site_url = site_url
 
           insert_query.product_id = res[i].id
@@ -129,15 +140,15 @@ function SneakersGetData(page) {
           insert_query.product_local_img = local_img
           insert_query.product_name = res[i].content.title
           insert_query.product_comment = res[i].content.description
-          insert_query.category = catergory_list[category]['cat_name']
+          insert_query.category = ''
 
-          insert_query.brand = ''
+          insert_query.brand = burberry_brand.id
 
           insert_query.season_ = ''
           insert_query.theme_ = ''
           insert_query.size_color = ''
           insert_query.delivery = ''
-          insert_query.deadline = ''
+          insert_query.deadline = new Date()
           insert_query.place = ''
           insert_query.shop_name_ = 'AGGIORNAMENTI'
           insert_query.shipping_place = ''
@@ -175,16 +186,19 @@ function SneakersGetData(page) {
 
 exports.changeInfo = (req, res) => {}
 
-exports.getInfo = (req, res) => {
-  console.log('Hi')
+exports.getInfo = async (req, res) => {
   try {
     if (req.query.sel > 0) {
       user_id = req.query.sel
-      category = req.query.category
+      keyword = req.query.keyword
+      burberry_brand = await Brand.findOne({ where: { name: 'Burberry' } })
+      if (burberry_brand) {
+      } else {
+        burberry_brand = await Brand.create({ name: 'Burberry' })
+      }
+      // if (req.query.min_price > 0) min_price = req.query.min_price
 
-      if (req.query.min_price > 0) min_price = req.query.min_price
-
-      if (req.query.max_price > 0) max_price = req.query.max_price
+      // if (req.query.max_price > 0) max_price = req.query.max_price
       sn_now_page = 1
 
       SneakersGetData(sn_now_page)
@@ -197,16 +211,34 @@ exports.getInfo = (req, res) => {
 }
 
 exports.exhibit = (req, res) => {
+  const { user_id } = req.body
+
   Products.findAll({
-    where: { user_id, site_url },
+    where: { site_url },
   })
     .then(async (products) => {
       if (products.length) {
-        await loginBuyma()
-        for (let i = 0; i < products.length; i++) {
-          await exhibitBuyma(products[i], i !== 0)
+        if (products.length) {
+          const user = await Users.findOne({
+            where: { id: user_id },
+          })
+          user.status = 'exhibit'
+          await user.save()
+          res.status(200).json({ success: false })
+          const exhibitsettings = await ExhibitSettings.findOne({
+            where: { user_id },
+          })
+          await loginBuyma()
+          for (let i = 0; i < products.length; i++) {
+            const success = await exhibitBuyma(
+              products[i],
+              i !== 0,
+              exhibitsettings,
+            )
+          }
+          user.status = 'init'
+          await user.save()
         }
-        res.status(200).json({ success: true })
       }
     })
     .catch((err) => {

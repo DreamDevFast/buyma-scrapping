@@ -79,6 +79,7 @@ CREATE TABLE `products` (
   `tariff_` varchar(255) DEFAULT NULL,
   `exhibition_memo_` text DEFAULT NULL,
   `purchase_memo_` text DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'init',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
@@ -121,6 +122,7 @@ CREATE TABLE `users` (
   `role` enum('producer','worker') COLLATE utf8mb4_unicode_ci NOT NULL,
   `family_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `cell_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT 'init',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -133,6 +135,42 @@ insert  into `users`(`id`,`_token`,`email`,`email_verified_at`,`password`,`role`
 (1,'123AYwZvmLlVVQi5d2Lmmpot9TbM9APoWKoQZW2E','nonaka@gmail.com',NULL,'$2y$10$LUKN9Loy4toaUg/JI4i/fuWx.mvJxslNOW0uQxTNmumnyQr.pQPBq','producer','Nonaka',NULL,'2022-07-30 10:38:49','2022-07-30 10:38:49'),
 (10,'nAbAYwZvmLlVVQi5d2Lmmpot9TbM9APoWKoQZW2E','moon.rider.dev@gmail.com',NULL,'$2y$10$iSsEh6QIz9W3ceiYGj0VKec9nYVdbs3i7AdsssVa4LG0KJIrBpbuG','producer','Moon',NULL,'2022-09-04 15:14:18','2022-09-04 15:19:57');
 
+DROP TABLE IF EXISTS `exhibitsettings`;
+
+CREATE TABLE `exhibitsettings` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) unsigned NOT NULL,
+  `commission` int unsigned NOT NULL DEFAULT 7,
+  `comment` text DEFAULT '【商品説明】
+〇人気ブランドの在庫は変動が激しいため、ご購入前にお問い合わせより在庫の確認をお願い致します。
+〇商品は送料込みです。
+〇ご購入手続き後のキャンセル・返品・交換は原則として対応いたしかねます。
+
+【発送ついてのお知らせ】
+〇購入手続き完了後１０〜１８日で前後で発送。
+ (商品状態により希に発送が遅れることがありますが、その際はご連絡いたしますので予めご了承お願いします。)
+
+
+【出品者コメント】
+〇人気ブランドのため、ご購入前にお問い合わせより在庫の確認をお願い致します。
+〇正規品及び本物鑑定済みのショップでのみ商品を買い付けしております。
+〇新品・未使用のみ販売致しております。
+〇こちらの商品は買付先にて新品保証、鑑定済みです。ただし、買付先の規定でもともと商品に付属しているブランドタグや説明書などの付属品が同梱されない場合があることを事前にご了承ください。
+
+
+【ショップからのお願い】
+〇人気ブランドの在庫は変動が激しいため、ご購入前にお問い合わせより在庫の確認をお願い致します。
+ 在庫確認せずにご購入され在庫切れの際は「お客様都合」でのキャンセルとさせて頂きますことを
+ 予めご了承お願いします。
+〇在庫のご用意はありますが、完売の場合やむをえずご注文をキャンセルさせて頂くことがありますのでご了承お願いします。
+〇丁寧に検品・梱包いたしますが、輸送中に箱に多少の汚れが残る場合がございますので、BUYMA補償制度あんしんプラスへのお申し込みもご検討ください。',
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+insert into `exhibitsettings`(`id`, `user_id`) values
+(1, 1),
+(2, 10);
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

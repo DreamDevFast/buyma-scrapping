@@ -5,7 +5,7 @@ const route = require("./app/routes");
 const db = require("./app/models");
 
 var corsOptions = {
-	origin: ['http://nitouryu.doorstime.com', 'http://31.220.108.129', 'http://10.10.10.87:8000']
+	origin: '*'
 };
 
 app.use(cors(corsOptions));

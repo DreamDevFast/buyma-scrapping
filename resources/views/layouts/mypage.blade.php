@@ -6,8 +6,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta name="description" content="Responsive Bootstrap 4 and web Application ui kit.">
-<title>:: Aero Bootstrap4 Admin :: Home</title>
+<title>Buyma出品する</title>
 <link rel="icon" href="favicon.ico" type="image/x-icon"> <!-- Favicon-->
 <link rel="stylesheet" href="{{ asset('assets/plugins/bootstrap/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/charts-c3/plugin.css') }}"/>
@@ -18,8 +19,10 @@
 <link rel="stylesheet" href="{{ asset('assets/plugins/footable-bootstrap/css/footable.bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ asset('assets/plugins/footable-bootstrap/css/footable.standalone.min.css') }}">
 <link href="{{ asset('assets/plugins/bootstrap-select/css/bootstrap-select.css') }}" rel="stylesheet" />
+<link rel="stylesheet" href="{{ asset('assets/plugins/toastr/toastr.min.css') }}">
 
 <link rel="stylesheet" href="{{ asset('assets/css/style.min.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/plugins/select2/select2.css') }}" />
 <style>
 .l-slategray_1 {
     background: linear-gradient(0deg, #777, #28a745) !important;
@@ -42,13 +45,13 @@
 <div class="overlay"></div>
 
 <!-- Main Search -->
-<div id="search">
+<!-- <div id="search">
     <button id="close" type="button" class="close btn btn-primary btn-icon btn-icon-mini btn-round">x</button>
     <form>
-      <input type="search" value="" placeholder="検索ワード入力..." id="skeyword" name="skeyword" value="<?=$skeyword?>"/>
+      <input type="search" value="" placeholder="検索ワード入力..." id="skeyword" name="keyword" value=""/>
       <button type="button" class="btn btn-primary" onclick="search()">商品検索</button>
     </form>
-</div>
+</div> -->
 <!-- Left Sidebar -->
 <aside id="leftsidebar" class="sidebar">
     <div class="navbar-brand">
@@ -63,7 +66,7 @@
                     <a class="image" href="profile.html"><img src="assets/images/profile_av.jpg" alt="User"></a>
                     <div class="detail">                    
                         <h4>{{Auth::user()->family_name}}</h4>
-                        <small>Super Admin</small>                        
+                        <small>{{Auth::user()->status}}</small>                        
                     </div>
                 </div>
             </li>
@@ -73,28 +76,42 @@
                     <li><a href="./goatpage">www.goat.com</a></li>
                     <li><a href="./louipage">it.louisvuitton.com</a></li>
                     <li><a href="./burberry">it.burberry.com</a></li>  
-                    <li><a href="./dior">www.dior.com</a></li>             
+                    <li><a href="./dior">www.dior.com</a></li>  
+                    <li><a href="./gucci">www.gucci.com</a></li>  
+                    <li><a href="./chanel">www.chanel.com</a></li>  
+                    <li><a href="./balenciaga">www.balenciaga.com</a></li> 
+                    <li><a href="./givenchy">www.givenchy.com</a></li>           
                 </ul>
             </li>            
-            <li <?php if(strpos(url()->current(), "changepass"))echo 'class="active open"';?>><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-flower"></i><span>設定管理</span></a>
-                <ul class="ml-menu">
-                    <li><a href="./changepass">パスワード変更</a></li>
-                </ul>
-            </li>   
+            <li <?php if(strpos(url()->current(), "changepass"))echo 'class="active open"';?>><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-account"></i><span>マイページ</span></a>
+            <ul class="ml-menu">
+					<li><a href="./changebuymainfo">Buyma情報変更</a></li>
+					<li><a href="./changeinfo">ユーザー情報変更</a></li>
+					<li><a href="./changepass">パスワード変更</a></li>
+					<li><a href="./exhibitsettings">出品設定</a></li>
+				</ul>
+            </li> 
+            <li class=""><a href="./findandsell"><i class="zmdi zmdi-search"></i><span>探して出品する</span></a></li> 
+            
+			@if (Auth::user()->email == "buonlavoro123@gmail.com" || Auth::user()->email == "te87533555@gmail.com")
+            		<li>
+				<a href="./admin_page" class="menu-toggle"><i class="zmdi zmdi-flower"></i><span>管理者ページ</span></a>
+			</li>
+            		@endif			
             <li class=""><a href="./logout"><i class="zmdi zmdi-power"></i><span>ログアウト</span></a></li>         
         </ul>
     </div>
 </aside>
 
 <!-- Right Sidebar -->
-<div class="navbar-right">
+<!-- <div class="navbar-right">
     <ul class="navbar-nav">
         <li><a href="#search" class="main_search" title="商品検索..."><i class="zmdi zmdi-search"></i></a></li> 
-        <!-- <li><a href="sign-in.html" class="mega-menu" title="商品追加"><i class="zmdi zmdi-assignment"></i></a></li>
+        <li><a href="sign-in.html" class="mega-menu" title="商品追加"><i class="zmdi zmdi-assignment"></i></a></li>
         <li><a href="sign-in.html" class="mega-menu" title="CSVダウンロード"><i class="zmdi zmdi-swap-alt"></i></a></li>
-        <li><a href="sign-in.html" class="mega-menu" title="ログアウト"><i class="zmdi zmdi-power"></i></a></li> -->
+        <li><a href="sign-in.html" class="mega-menu" title="ログアウト"><i class="zmdi zmdi-power"></i></a></li> 
     </ul>
-</div>
+</div> -->
 
 <aside id="rightsidebar" class="right-sidebar">
     <ul class="nav nav-tabs sm">
@@ -241,10 +258,11 @@
         </div>
     </div>
 </aside>
-
+<div id="toast-container" class="toast-top-right"></div>
 <!-- Main Content -->
 @yield('content')
 <!-- Jquery Core Js --> 
+
 <script src="{{ asset('assets/bundles/libscripts.bundle.js') }}"></script> <!-- Lib Scripts Plugin Js ( jquery.v3.2.1, Bootstrap4 js) --> 
 <script src="{{ asset('assets/bundles/vendorscripts.bundle.js') }}"></script> <!-- slimscroll, waves Scripts Plugin Js -->
 
@@ -257,6 +275,11 @@
 <script src="{{ asset('assets/bundles/footable.bundle.js') }}"></script> 
 <script src="{{ asset('assets/js/pages/tables/footable.js') }}"></script>
 
+<script src="{{ asset('assets/plugins/toastr/toastr.min.js') }}"></script>
+
+<!-- Select2 -->
+<script src="{{ asset('assets/plugins/multi-select/js/jquery.multi-select.js') }}"></script> <!-- Multi Select Plugin Js --> 
+<script src="{{ asset('assets/plugins/select2/select2.min.js') }}"></script> <!-- Select2 Js -->
 <script>
     $( document ).ready(function() {
     // Handler for .ready() called.
@@ -310,138 +333,50 @@
     });
 </script>
 <script>
-    function add_goat_product(){        
-        $("#defaultModal").modal('hide');
-
-        $.ajax({
-            url: 'http://localhost:32768/api/v1/goats/get_info?sel={{Auth::user()->id}}',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/goats/get_info?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
-        });
-		
-    }
     function csv_down(sel){
         location = "./csv_down?sel="+sel;
     }
-    function add_loui_product(){
-        $("#defaultModal").modal('hide');
-        $.ajax({
-            //url: 'http://localhost:32768/api/v1/louis/get_info?sel={{Auth::user()->id}}',
-            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/louis/get_info?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
-        });
-        
-    }
-    function add_bur_product(){
-        $("#defaultModal").modal('hide');
-        $.ajax({
-            //url: 'http://localhost:32768/api/v1/burs/get_info?sel={{Auth::user()->id}}',
-            url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/burs/get_info?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
-        });
-        
-    }
 
-    function add_dior_product(){
-        $("#defaultModal").modal('hide');
-        $.ajax({
-            url: 'http://localhost:32768/api/v1/dior?sel={{Auth::user()->id}}',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
-            type: 'get',
-            data: {
-                category: $("#category").val(),
-                keyword: $("#keyword").val(),
-                min_price: $("#min_price").val(),
-                max_price: $("#max_price").val(),
-            },
-            success: function() {
-                
-            }
+    $(function () {
+        $('.select2').select2();
+        $(".search-select").select2({
+            allowClear: true
         });
-        
-    }
-    localStorage.setItem('skeyword', "<?=$skeyword?>");
-    function search(){
-        localStorage.setItem('skeyword', $("#skeyword").val());
-        location = "./goatpage?page=<?=($now_page)?>&skeyword="+localStorage.getItem("skeyword");
-    }
+        $("#max-select").select2({
+            placeholder: "Select",
+            maximumSelectionSize: 2,
+        });
+        $("#loading-select").select2({
+            placeholder: "Select",
+            minimumInputLength: 1,
+            query: function (query) {
+                var data = {results: []}, i, j, s;
+                for (i = 1; i < 5; i++) {
+                    s = "";
+                    for (j = 0; j < i; j++) {s = s + query.term;}                   
+                
 
-    function exhibit_dior_product(){
-        $.ajax({
-            url: 'http://localhost:32768/api/v1/dior',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
-            type: 'post',
-            data: {},
-            success: function() {
-                
+                    data.results.push({id: query.term + i, text: s});
+                }
+                query.callback(data);
             }
         });
-    }
+        var data=[{id:0,tag:'enhancement'},{id:1,tag:'bug'},{id:2,tag:'duplicate'},{id:3,tag:'invalid'},{id:4,tag:'wontfix'}];
+        function format(item) { return item.tag; }
+        $("#array-select").select2({
+            placeholder: "Select",
+            data:{ results: data, text: 'tag' },
+            formatSelection: format,
+            formatResult: format
+        });
+    });
 
-    function exhibit_burberry_product(){
-        $.ajax({
-            url: 'http://localhost:32768/api/v1/burs',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
-            type: 'post',
-            data: {},
-            success: function() {
-                
-            }
-        });
-    }
-
-    function exhibit_goat_product(){
-        $.ajax({
-            url: 'http://localhost:32768/api/v1/goats',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
-            type: 'post',
-            data: {},
-            success: function() {
-                
-            }
-        });
-    }
-
-    function exhibit_loui_product(){
-        $.ajax({
-            url: 'http://localhost:32768/api/v1/louis',
-            // url: 'http://xs245289.xsrv.jp/fmproxy/api/v1/dior?sel={{Auth::user()->id}}',
-            type: 'post',
-            data: {},
-            success: function() {
-                
-            }
-        });
-    }
+    // localStorage.setItem('keyword', "$keyword");
+    // function search(){
+    //     localStorage.setItem('keyword', $("#keyword").val());
+    //     location = "./goatpage?page=$now_page)?>&keyword="+localStorage.getItem("keyword");
+    // }
 </script>
+@stack('scripts')
 </body>
-
-
 </html>
